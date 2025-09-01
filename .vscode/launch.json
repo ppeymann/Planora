@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Gateway Service",
+      "type": "go",
+      "request": "launch",
+      "program": "${workspaceFolder}/gateway/cmd/main.go",
+      "cwd": "${workspaceFolder}"
+    }
+    // {
+    //   "name": "Run User Service",
+    //   "type": "go",
+    //   "request": "launch",
+    //   "program": "${workspaceFolder}/user/cmd/user/main.go",
+    //   "cwd": "${workspaceFolder}"
+    // }
+    // {
+    //   "name": "Run Todo Serivce",
+    //   "type": "go",
+    //   "request": "launch",
+    //   "program": "${workspaceFolder}/todo/cmd/todo/main.go",
+    //   "cwd": "${workspaceFolder}"
+    // }
+  ],
+  "compounds": [
+    {
+      "name": "Run All Services",
+      "configurations": [
+        "Run Gateway Service"
+        // "Run User Service",
+        // "Run Todo Serivce"
+      ]
+    }
+  ]
+}

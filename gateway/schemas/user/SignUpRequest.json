@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "SignUpRequest",
+    "$protected": false,
+    "type":"object",
+    "properties": {
+        "username":{
+            "type":"string"
+        },
+        "password": {
+            "type":"string"
+        },
+        "email":{
+            "type":"string"
+        },
+        "first_name":{
+            "type":"string"
+        },
+        "last_name":{
+            "type":"string"
+        }
+    },
+    "required": [
+        "username",
+        "password",
+        "email"
+    ]
+}

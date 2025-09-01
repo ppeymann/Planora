@@ -1,1 +1,39 @@
 package user
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/ppeymann/Planora.git/pkg/common"
+	userpb "github.com/ppeymann/Planora.git/proto/user"
+	"github.com/ppeymann/Planora/gateway/models"
+	validations "github.com/ppeymann/Planora/gateway/validation"
+)
+
+type validationService struct {
+	next   models.UserService
+	schema map[string][]byte
+}
+
+// SignUp implements models.UserService.
+func (v *validationService) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) *common.BaseResult {
+	err := validations.Validate(in, v.schema)
+	if err != nil {
+		return err
+	}
+
+	return v.next.SignUp(ctx, in)
+}
+
+func NewValidationService(srv models.UserService, path string) (models.UserService, error) {
+	schema := make(map[string][]byte)
+
+	// Load the schema from the specified path
+	err := validations.LoadSchema(path, schema)
+	if err != nil {
+		return nil, err
+	}
+
+	return &validationService{
+		next:   srv,
+		schema: schema,
+	}, nil
+}

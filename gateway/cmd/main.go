@@ -9,6 +9,7 @@ import (
 	kitLog "github.com/go-kit/log"
 	"github.com/nats-io/nats.go"
 	"github.com/ppeymann/Planora.git/pkg/env"
+	"github.com/ppeymann/Planora/gateway/cmd/pkg"
 	"github.com/ppeymann/Planora/gateway/server"
 )
 
@@ -39,6 +40,8 @@ func main() {
 	svr := server.NewServer(sl)
 
 	// =======  SERVICE  ========
+
+	pkg.InitUserService(nc, sl, svr)
 
 	// listen and serve...
 	svr.Listen()

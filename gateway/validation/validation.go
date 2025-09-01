@@ -97,7 +97,7 @@ func validateSchema(input interface{}, schema []byte) ([]string, error) {
 			case gojsonschema.KEY_PATTERN:
 				errs = append(errs, fmt.Sprintf(formatErr, e.Field()))
 			case gojsonschema.KEY_REQUIRED:
-				errs = append(errs, fmt.Sprint("%v", e.Description()))
+				errs = append(errs, fmt.Sprintf("%v", e.Description()))
 			case gojsonschema.KEY_ENUM:
 				errs = append(errs, fmt.Sprintf("%v", strings.Replace(e.Description(), "\"", "'", -1)))
 			case "condition_else":
