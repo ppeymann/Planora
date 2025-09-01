@@ -2,9 +2,19 @@ package common
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"gorm.io/gorm"
+)
+
+var (
+	ErrUnimplementedRequest = errors.New("request is not implemented")
+	ErrUnhandled            = errors.New("an unhandled error occurred during processing the request")
+	ErrNotFound             = errors.New("not found")
+	ErrInternalServer       = errors.New("internal server error")
+	ErrEntityAlreadyExist   = errors.New("entity with specified properties already exist")
+	ErrUnAuthorization      = errors.New("UnAuthorization Error")
 )
 
 type (
