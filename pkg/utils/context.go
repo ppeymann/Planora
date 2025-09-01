@@ -2,10 +2,10 @@ package utils
 
 import (
 	"errors"
-	"todo/pkg/auth"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mitchellh/mapstructure"
+	"github.com/ppeymann/Planora.git/pkg/auth"
 )
 
 const (
