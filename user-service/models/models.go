@@ -6,6 +6,8 @@ import (
 
 	"gorm.io/gorm"
 
+	"github.com/ppeymann/Planora.git/pkg/common"
+
 	userpb "github.com/ppeymann/Planora.git/proto/user"
 )
 
@@ -18,6 +20,8 @@ type (
 
 	UserRepository interface {
 		Create(in *userpb.SignUpRequest) (*UserEntity, error)
+
+		common.BaseRepository
 	}
 
 	UserEntity struct {
