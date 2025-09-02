@@ -1,0 +1,39 @@
+package service
+
+import (
+	"context"
+
+	userpb "github.com/ppeymann/Planora.git/proto/user"
+	"github.com/ppeymann/Planora/user/models"
+	"google.golang.org/protobuf/types/known/timestamppb"
+)
+
+type UserServiceServer struct {
+	userpb.UnimplementedUserServiceServer
+	repo models.UserRepository
+}
+
+func NewUserServiceServer(r models.UserRepository) *UserServiceServer {
+	return &UserServiceServer{
+		repo: r,
+	}
+}
+
+func (s *UserServiceServer) SignUp(ctx context.Context, in *userpb.SignUpRequest) (*userpb.User, error) {
+	user, err := s.repo.Create(in)
+	if err != nil {
+		return nil, err
+	}
+
+	return &userpb.User{
+		Model: &userpb.BaseModel{
+			Id:         uint64(user.ID),
+			CreatedAt:  timestamppb.New(user.CreatedAt),
+			UpdatedeAt: timestamppb.New(user.UpdatedAt),
+		},
+		Username:  user.Username,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}, nil
+}
