@@ -7,14 +7,14 @@
       "request": "launch",
       "program": "${workspaceFolder}/gateway/cmd/main.go",
       "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Run User Service",
+      "type": "go",
+      "request": "launch",
+      "program": "${workspaceFolder}/user-service/cmd/user/main.go",
+      "cwd": "${workspaceFolder}"
     }
-    // {
-    //   "name": "Run User Service",
-    //   "type": "go",
-    //   "request": "launch",
-    //   "program": "${workspaceFolder}/user/cmd/user/main.go",
-    //   "cwd": "${workspaceFolder}"
-    // }
     // {
     //   "name": "Run Todo Serivce",
     //   "type": "go",
@@ -27,8 +27,8 @@
     {
       "name": "Run All Services",
       "configurations": [
-        "Run Gateway Service"
-        // "Run User Service",
+        "Run Gateway Service",
+        "Run User Service"
         // "Run Todo Serivce"
       ]
     }
