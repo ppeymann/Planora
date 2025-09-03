@@ -19,7 +19,11 @@ type (
 	EventType string
 
 	UserRepository interface {
+		// Create new user
 		Create(in *userpb.SignUpRequest) (*UserEntity, error)
+
+		// Update user
+		Update(user *UserEntity) error
 
 		common.BaseRepository
 	}
@@ -27,11 +31,12 @@ type (
 	UserEntity struct {
 		gorm.Model
 
-		Username  string `json:"username" gorm:"uniqueIndex;not null"`
-		Email     string `json:"email" gorm:"uniqueIndex;not null"`
-		Password  string `json:"-" gorm:"not null"`
-		FirstName string `json:"first_name" gorm:"column:first_name"`
-		LastName  string `json:"last_name" gorm:"column:last_name"`
+		Username  string               `json:"username" gorm:"uniqueIndex;not null"`
+		Email     string               `json:"email" gorm:"uniqueIndex;not null"`
+		Password  string               `json:"-" gorm:"not null"`
+		FirstName string               `json:"first_name" gorm:"column:first_name"`
+		LastName  string               `json:"last_name" gorm:"column:last_name"`
+		Tokens    []RefreshTokenEntity `json:"-" gorm:"foreignKey:AccountID;references:ID"`
 	}
 
 	RefreshTokenEntity struct {
