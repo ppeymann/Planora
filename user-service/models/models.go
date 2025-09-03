@@ -56,5 +56,5 @@ type (
 )
 
 const (
-	Create EventType = "user.CREATE"
+	Signup EventType = "user.SIGNUP"
 )

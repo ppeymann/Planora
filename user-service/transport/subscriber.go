@@ -8,7 +8,7 @@ import (
 
 func RegisterUserSubscriber(nc *nats.Conn, userService *service.UserServiceServer) {
 	handler := map[models.EventType]func(*nats.Msg){
-		models.Create: func(m *nats.Msg) { HandlerCreate(m, userService, nc) },
+		models.Signup: func(m *nats.Msg) { HandlerCreate(m, userService, nc) },
 	}
 
 	nc.Subscribe("user.*", func(m *nats.Msg) {
