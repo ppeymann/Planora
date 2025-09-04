@@ -242,6 +242,58 @@ func (x *User) GetLastName() string {
 	return ""
 }
 
+type LoginRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginRequest) Reset() {
+	*x = LoginRequest{}
+	mi := &file_user_user_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginRequest) ProtoMessage() {}
+
+func (x *LoginRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
+func (*LoginRequest) Descriptor() ([]byte, []int) {
+	return file_user_user_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *LoginRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *LoginRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
 var File_user_user_proto protoreflect.FileDescriptor
 
 const file_user_user_proto_rawDesc = "" +
@@ -268,9 +320,14 @@ const file_user_user_proto_rawDesc = "" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x1d\n" +
 	"\n" +
 	"first_name\x18\x04 \x01(\tR\tfirstName\x12\x1b\n" +
-	"\tlast_name\x18\x05 \x01(\tR\blastName28\n" +
+	"\tlast_name\x18\x05 \x01(\tR\blastName\"F\n" +
+	"\fLoginRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword2a\n" +
 	"\vUserService\x12)\n" +
 	"\x06SignUp\x12\x13.user.SignUpRequest\x1a\n" +
+	".user.User\x12'\n" +
+	"\x05Login\x12\x12.user.LoginRequest\x1a\n" +
 	".user.UserB\x13Z\x11proto/user;userpbb\x06proto3"
 
 var (
@@ -285,22 +342,25 @@ func file_user_user_proto_rawDescGZIP() []byte {
 	return file_user_user_proto_rawDescData
 }
 
-var file_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_user_user_proto_goTypes = []any{
 	(*BaseModel)(nil),             // 0: user.BaseModel
 	(*SignUpRequest)(nil),         // 1: user.SignUpRequest
 	(*User)(nil),                  // 2: user.User
-	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
+	(*LoginRequest)(nil),          // 3: user.LoginRequest
+	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
 }
 var file_user_user_proto_depIdxs = []int32{
-	3, // 0: user.BaseModel.created_at:type_name -> google.protobuf.Timestamp
-	3, // 1: user.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
-	3, // 2: user.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
+	4, // 0: user.BaseModel.created_at:type_name -> google.protobuf.Timestamp
+	4, // 1: user.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
+	4, // 2: user.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
 	0, // 3: user.User.model:type_name -> user.BaseModel
 	1, // 4: user.UserService.SignUp:input_type -> user.SignUpRequest
-	2, // 5: user.UserService.SignUp:output_type -> user.User
-	5, // [5:6] is the sub-list for method output_type
-	4, // [4:5] is the sub-list for method input_type
+	3, // 5: user.UserService.Login:input_type -> user.LoginRequest
+	2, // 6: user.UserService.SignUp:output_type -> user.User
+	2, // 7: user.UserService.Login:output_type -> user.User
+	6, // [6:8] is the sub-list for method output_type
+	4, // [4:6] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
 	4, // [4:4] is the sub-list for extension extendee
 	0, // [0:4] is the sub-list for field type_name
@@ -317,7 +377,7 @@ func file_user_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_user_proto_rawDesc), len(file_user_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
