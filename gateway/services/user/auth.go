@@ -11,6 +11,11 @@ type authService struct {
 	next models.UserService
 }
 
+// Login implements models.UserService.
+func (a *authService) Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult {
+	return a.next.Login(ctx, in)
+}
+
 // SignUp implements models.UserService.
 func (a *authService) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) *common.BaseResult {
 	return a.next.SignUp(ctx, in)

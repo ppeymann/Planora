@@ -294,6 +294,50 @@ func (x *LoginRequest) GetPassword() string {
 	return ""
 }
 
+type AccountRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AccountRequest) Reset() {
+	*x = AccountRequest{}
+	mi := &file_user_user_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountRequest) ProtoMessage() {}
+
+func (x *AccountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountRequest.ProtoReflect.Descriptor instead.
+func (*AccountRequest) Descriptor() ([]byte, []int) {
+	return file_user_user_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *AccountRequest) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
 var File_user_user_proto protoreflect.FileDescriptor
 
 const file_user_user_proto_rawDesc = "" +
@@ -323,11 +367,15 @@ const file_user_user_proto_rawDesc = "" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\"F\n" +
 	"\fLoginRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword2a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\" \n" +
+	"\x0eAccountRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id2\x8e\x01\n" +
 	"\vUserService\x12)\n" +
 	"\x06SignUp\x12\x13.user.SignUpRequest\x1a\n" +
 	".user.User\x12'\n" +
 	"\x05Login\x12\x12.user.LoginRequest\x1a\n" +
+	".user.User\x12+\n" +
+	"\aAccount\x12\x14.user.AccountRequest\x1a\n" +
 	".user.UserB\x13Z\x11proto/user;userpbb\x06proto3"
 
 var (
@@ -342,25 +390,28 @@ func file_user_user_proto_rawDescGZIP() []byte {
 	return file_user_user_proto_rawDescData
 }
 
-var file_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_user_user_proto_goTypes = []any{
 	(*BaseModel)(nil),             // 0: user.BaseModel
 	(*SignUpRequest)(nil),         // 1: user.SignUpRequest
 	(*User)(nil),                  // 2: user.User
 	(*LoginRequest)(nil),          // 3: user.LoginRequest
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*AccountRequest)(nil),        // 4: user.AccountRequest
+	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
 }
 var file_user_user_proto_depIdxs = []int32{
-	4, // 0: user.BaseModel.created_at:type_name -> google.protobuf.Timestamp
-	4, // 1: user.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
-	4, // 2: user.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
+	5, // 0: user.BaseModel.created_at:type_name -> google.protobuf.Timestamp
+	5, // 1: user.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
+	5, // 2: user.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
 	0, // 3: user.User.model:type_name -> user.BaseModel
 	1, // 4: user.UserService.SignUp:input_type -> user.SignUpRequest
 	3, // 5: user.UserService.Login:input_type -> user.LoginRequest
-	2, // 6: user.UserService.SignUp:output_type -> user.User
-	2, // 7: user.UserService.Login:output_type -> user.User
-	6, // [6:8] is the sub-list for method output_type
-	4, // [4:6] is the sub-list for method input_type
+	4, // 6: user.UserService.Account:input_type -> user.AccountRequest
+	2, // 7: user.UserService.SignUp:output_type -> user.User
+	2, // 8: user.UserService.Login:output_type -> user.User
+	2, // 9: user.UserService.Account:output_type -> user.User
+	7, // [7:10] is the sub-list for method output_type
+	4, // [4:7] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
 	4, // [4:4] is the sub-list for extension extendee
 	0, // [0:4] is the sub-list for field type_name
@@ -377,7 +428,7 @@ func file_user_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_user_proto_rawDesc), len(file_user_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

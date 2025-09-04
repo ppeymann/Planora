@@ -16,6 +16,37 @@ type service struct {
 	nc *nats.Conn
 }
 
+// Login implements models.UserService.
+func (s *service) Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult {
+	data, err := json.Marshal(in)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	msg, err := s.nc.Request(string(models.Login), data, 2*time.Second)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	op := &common.BaseResult{}
+
+	err = json.Unmarshal(msg.Data, op)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	return op
+}
+
 // SignUp implements models.UserService.
 func (s *service) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) *common.BaseResult {
 	data, err := json.Marshal(in)
@@ -26,7 +57,7 @@ func (s *service) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) *common.Bas
 		}
 	}
 
-	msg, err := s.nc.Request(string(models.EventSignUp), data, 2*time.Second)
+	msg, err := s.nc.Request(string(models.SignUp), data, 2*time.Second)
 	if err != nil {
 		return &common.BaseResult{
 			Errors: []string{err.Error()},

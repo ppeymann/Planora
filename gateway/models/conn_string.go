@@ -5,5 +5,6 @@ type (
 )
 
 const (
-	EventSignUp EventName = "user.SIGNUP"
+	SignUp EventName = "user.SIGNUP"
+	Login  EventName = "user.LOGIN"
 )
