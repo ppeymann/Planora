@@ -15,6 +15,9 @@ type (
 
 		// Login service is for log in user if signed up
 		Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult
+
+		// Account service is for getting user account info
+		Account(ctx *gin.Context) *common.BaseResult
 	}
 
 	// UserHandler represents method signatures for user handlers.
@@ -25,5 +28,8 @@ type (
 
 		// Login handler is for log in user if signed up
 		Login(ctx *gin.Context)
+
+		// Account handler is for getting user account info
+		Account(ctx *gin.Context)
 	}
 )

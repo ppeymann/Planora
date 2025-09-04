@@ -13,6 +13,11 @@ type validationService struct {
 	schema map[string][]byte
 }
 
+// Account implements models.UserService.
+func (v *validationService) Account(ctx *gin.Context) *common.BaseResult {
+	return v.next.Account(ctx)
+}
+
 // Login implements models.UserService.
 func (v *validationService) Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult {
 	err := validations.Validate(in, v.schema)

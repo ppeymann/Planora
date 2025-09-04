@@ -14,6 +14,22 @@ type handler struct {
 	next models.UserService
 }
 
+// Account implements models.UserHandler.
+//
+// @BasePath			/api/v1/user
+// @Summary				get account
+// @Description			get account information
+// @Tags				user
+// @Accept				json
+// @Produce				json
+// @Success				200		{object}	common.BaseResult	"always return status 200 but body contains errors"
+// @Router				/	[get]
+// @Security			bearer authorization
+func (h *handler) Account(ctx *gin.Context) {
+	result := h.next.Account(ctx)
+	ctx.JSON(result.Status, result)
+}
+
 // Login implements models.UserHandler.
 //
 // @BasePath			/api/v1/user
@@ -75,7 +91,11 @@ func NewHandler(service models.UserService, s *server.Server) models.UserHandler
 	{
 		group.POST("/signup", handler.SignUp)
 		group.POST("/login", handler.Login)
+	}
 
+	group.Use(s.Authenticate())
+	{
+		group.GET("/", handler.Account)
 	}
 
 	return handler

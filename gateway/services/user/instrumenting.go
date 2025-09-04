@@ -16,6 +16,16 @@ type instrumentingService struct {
 	next           models.UserService
 }
 
+// Account implements models.UserService.
+func (i *instrumentingService) Account(ctx *gin.Context) *common.BaseResult {
+	defer func(begin time.Time) {
+		i.requestCount.With("method", "Account").Add(1)
+		i.requestLatency.With("method", "Account").Observe(time.Since(begin).Seconds())
+	}(time.Now())
+
+	return i.next.Account(ctx)
+}
+
 // Login implements models.UserService.
 func (i *instrumentingService) Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult {
 	defer func(begin time.Time) {

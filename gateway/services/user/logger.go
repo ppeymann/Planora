@@ -16,6 +16,21 @@ type loggerService struct {
 	next   models.UserService
 }
 
+// Account implements models.UserService.
+func (l *loggerService) Account(ctx *gin.Context) (result *common.BaseResult) {
+	defer func(begin time.Time) {
+		_ = l.logger.Log(
+			"method", "Account",
+			"errors", strings.Join(result.Errors, " ,"),
+			"result", result,
+			"client_ip", ctx.ClientIP(),
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+
+	return l.next.Account(ctx)
+}
+
 // Login implements models.UserService.
 func (l *loggerService) Login(ctx *gin.Context, in *userpb.LoginRequest) (result *common.BaseResult) {
 	defer func(begin time.Time) {
