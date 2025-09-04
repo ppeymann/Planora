@@ -25,6 +25,9 @@ type (
 		// Update user
 		Update(user *UserEntity) error
 
+		// Find with username
+		Find(username string) (*UserEntity, error)
+
 		common.BaseRepository
 	}
 
@@ -62,4 +65,5 @@ type (
 
 const (
 	Signup EventType = "user.SIGNUP"
+	Login  EventType = "user.LOGIN"
 )

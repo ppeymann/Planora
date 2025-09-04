@@ -16,6 +16,17 @@ type userRepo struct {
 	table    string
 }
 
+// Find implements models.UserRepository.
+func (r *userRepo) Find(username string) (*models.UserEntity, error) {
+	user := &models.UserEntity{}
+
+	if err := r.Model().Where("username = ?", username).First(user).Error; err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
 // Update implements models.UserRepository.
 func (r *userRepo) Update(user *models.UserEntity) error {
 	return r.pg.Save(user).Error

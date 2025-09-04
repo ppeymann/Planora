@@ -47,3 +47,43 @@ func (s *UserServiceServer) SignUpService(data []byte) (*models.TokenBundlerOutp
 		Expire: tokenClaims.ExpiredAt,
 	}, nil
 }
+
+func (s *UserServiceServer) LoginService(data []byte) (*models.TokenBundlerOutput, error) {
+	req := &userpb.LoginRequest{}
+
+	err := json.Unmarshal(data, req)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	user, err := s.Login(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	paseto, err := auth.NewPasetoMaker(env.GetEnv("JWT", ""))
+	if err != nil {
+		return nil, err
+	}
+
+	tokenClaims := &auth.Claims{
+		Subject:   uint(user.Model.Id),
+		Issuer:    "www.planora.com",
+		Audience:  "www.planora.com",
+		IssuedAt:  time.Unix(518400, 0),
+		ExpiredAt: time.Now().Add(1036800 * time.Minute).UTC(),
+	}
+
+	tokenStr, err := paseto.CreateToken(tokenClaims)
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.TokenBundlerOutput{
+		Token:  tokenStr,
+		Expire: tokenClaims.ExpiredAt,
+	}, nil
+}

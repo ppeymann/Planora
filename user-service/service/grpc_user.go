@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"github.com/ppeymann/Planora/user/models"
@@ -23,6 +24,29 @@ func (s *UserServiceServer) SignUp(ctx context.Context, in *userpb.SignUpRequest
 	user, err := s.repo.Create(in)
 	if err != nil {
 		return nil, err
+	}
+
+	return &userpb.User{
+		Model: &userpb.BaseModel{
+			Id:         uint64(user.ID),
+			CreatedAt:  timestamppb.New(user.CreatedAt),
+			UpdatedeAt: timestamppb.New(user.UpdatedAt),
+		},
+		Username:  user.Username,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}, nil
+}
+
+func (s *UserServiceServer) Login(ctx context.Context, in *userpb.LoginRequest) (*userpb.User, error) {
+	user, err := s.repo.Find(in.GetUsername())
+	if err != nil {
+		return nil, err
+	}
+
+	if user.Password != in.GetPassword() {
+		return nil, errors.New("permission denied")
 	}
 
 	return &userpb.User{
