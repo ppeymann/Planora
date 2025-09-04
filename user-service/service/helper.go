@@ -87,3 +87,22 @@ func (s *UserServiceServer) LoginService(data []byte) (*models.TokenBundlerOutpu
 		Expire: tokenClaims.ExpiredAt,
 	}, nil
 }
+
+func (s *UserServiceServer) AccountService(data []byte) (*userpb.User, error) {
+	req := &userpb.AccountRequest{}
+
+	err := json.Unmarshal(data, req)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	user, err := s.Account(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

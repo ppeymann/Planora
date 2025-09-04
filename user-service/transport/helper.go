@@ -23,3 +23,12 @@ func HandleLogin(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn) {
 		nc.Publish(m.Reply, replyData)
 	}
 }
+
+func HandleAccount(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn) {
+	resp, err := u.AccountService(m.Data)
+	replayData := common.BuildResponse(resp, err)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, replayData)
+	}
+}

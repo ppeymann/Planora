@@ -28,6 +28,9 @@ type (
 		// Find with username
 		Find(username string) (*UserEntity, error)
 
+		// FindByID find user with ID
+		FindByID(id uint) (*UserEntity, error)
+
 		common.BaseRepository
 	}
 
@@ -64,6 +67,7 @@ type (
 )
 
 const (
-	Signup EventType = "user.SIGNUP"
-	Login  EventType = "user.LOGIN"
+	Signup  EventType = "user.SIGNUP"
+	Login   EventType = "user.LOGIN"
+	Account EventType = "user.ACCOUNT"
 )

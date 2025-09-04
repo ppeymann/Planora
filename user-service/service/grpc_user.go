@@ -61,3 +61,22 @@ func (s *UserServiceServer) Login(ctx context.Context, in *userpb.LoginRequest) 
 		LastName:  user.LastName,
 	}, nil
 }
+
+func (s *UserServiceServer) Account(ctx context.Context, in *userpb.AccountRequest) (*userpb.User, error) {
+	user, err := s.repo.FindByID(uint(in.GetId()))
+	if err != nil {
+		return nil, err
+	}
+
+	return &userpb.User{
+		Model: &userpb.BaseModel{
+			Id:         uint64(user.ID),
+			CreatedAt:  timestamppb.New(user.CreatedAt),
+			UpdatedeAt: timestamppb.New(user.UpdatedAt),
+		},
+		Username:  user.Username,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}, nil
+}

@@ -16,6 +16,18 @@ type userRepo struct {
 	table    string
 }
 
+// FindByID implements models.UserRepository.
+func (r *userRepo) FindByID(id uint) (*models.UserEntity, error) {
+	user := &models.UserEntity{}
+
+	err := r.Model().Where("id = ?", id).First(user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
 // Find implements models.UserRepository.
 func (r *userRepo) Find(username string) (*models.UserEntity, error) {
 	user := &models.UserEntity{}
