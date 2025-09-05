@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/ppeymann/Planora.git/pkg/common"
+	todopb "github.com/ppeymann/Planora.git/proto/todo"
 	"gorm.io/gorm"
 )
 
@@ -11,7 +12,7 @@ type (
 	StatusType string
 
 	TodoRepository interface {
-		Create() (*TodoEntity, error)
+		Create(in *todopb.AddTodoRequest) (*TodoEntity, error)
 
 		common.BaseRepository
 	}
