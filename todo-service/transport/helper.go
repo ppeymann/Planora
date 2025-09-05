@@ -14,3 +14,12 @@ func HandleAddTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
 		nc.Publish(m.Reply, replayData)
 	}
 }
+
+func HandleUpdateTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
+	resp, err := t.AddTodoService(m.Data)
+	replayData := common.BuildResponse(resp, err)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, replayData)
+	}
+}

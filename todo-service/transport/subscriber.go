@@ -8,7 +8,8 @@ import (
 
 func RegisterTodoSubscriber(nc *nats.Conn, todoService *service.TodoServiceServer) {
 	handler := map[models.EventType]func(*nats.Msg){
-		models.SubjectAddTodo: func(m *nats.Msg) { HandleAddTodo(m, todoService, nc) },
+		models.SubjectAddTodo:    func(m *nats.Msg) { HandleAddTodo(m, todoService, nc) },
+		models.SubjectUpdateTodo: func(m *nats.Msg) { HandleUpdateTodo(m, todoService, nc) },
 	}
 
 	nc.Subscribe("todo.*", func(m *nats.Msg) {

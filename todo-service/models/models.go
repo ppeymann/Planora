@@ -13,7 +13,14 @@ type (
 	StatusType string
 
 	TodoRepository interface {
+		// Create new todo
 		Create(in *todopb.AddTodoRequest) (*TodoEntity, error)
+
+		// FindByID
+		FindByID(id uint) (*TodoEntity, error)
+
+		// Update
+		Update(t *TodoEntity) error
 
 		common.BaseRepository
 	}
@@ -32,6 +39,9 @@ type (
 
 		// UserID
 		UserID uint `json:"user_id" gorm:"column:user_id;index;not null"`
+
+		// RoomID if is 0 means this todo is private
+		RoomID uint `json:"room_id" gorm:"column:room_id;default:0"`
 	}
 )
 
@@ -44,7 +54,8 @@ const (
 )
 
 const (
-	SubjectAddTodo EventType = "todo.ADD"
+	SubjectAddTodo    EventType = "todo.ADD"
+	SubjectUpdateTodo EventType = "todo.UPDATE"
 )
 
 func ToBaseModel(t *TodoEntity) *todopb.BaseModel {

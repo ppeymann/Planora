@@ -6,7 +6,10 @@ option go_package = "proto/todo;todopb";
 
 import "google/protobuf/timestamp.proto";
 
-service TodoService { rpc AddTodo(AddTodoRequest) returns (Todo); }
+service TodoService {
+  rpc AddTodo(AddTodoRequest) returns (Todo);
+  rpc UpdateTodo(UpdateTodoRequest) returns (Todo);
+}
 
 message BaseModel {
   uint64 id = 1;
@@ -27,4 +30,9 @@ message AddTodoRequest {
   string title = 1;
   string description = 2;
   uint64 user_id = 3;
+}
+
+message UpdateTodoRequest {
+  AddTodoRequest todo = 1;
+  uint64 id = 2;
 }
