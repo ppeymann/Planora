@@ -16,7 +16,7 @@ func HandlerCreate(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn) {
 }
 
 func HandleLogin(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn) {
-	resp, err := u.SignUpService(m.Data)
+	resp, err := u.LoginService(m.Data)
 	replyData := common.BuildResponse(resp, err)
 
 	if m.Reply != "" {
