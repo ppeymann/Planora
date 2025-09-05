@@ -41,7 +41,11 @@ func main() {
 
 	// =======  SERVICE  ========
 
+	// User
 	pkg.InitUserService(nc, sl, svr)
+
+	// Todo
+	pkg.InitTodoService(nc, sl, svr)
 
 	// listen and serve...
 	svr.Listen()

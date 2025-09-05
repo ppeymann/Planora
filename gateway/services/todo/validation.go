@@ -1,0 +1,37 @@
+package todo
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/ppeymann/Planora.git/pkg/common"
+	"github.com/ppeymann/Planora/gateway/models"
+	validations "github.com/ppeymann/Planora/gateway/validation"
+)
+
+type validationService struct {
+	schemas map[string][]byte
+	next    models.TodoService
+}
+
+// AddTodo implements models.TodoService.
+func (v *validationService) AddTodo(ctx *gin.Context, in *models.TodoInput) *common.BaseResult {
+	err := validations.Validate(in, v.schemas)
+	if err != nil {
+		return err
+	}
+
+	return v.next.AddTodo(ctx, in)
+}
+
+func NewValidationService(path string, s models.TodoService) (models.TodoService, error) {
+	schemas := make(map[string][]byte)
+
+	err := validations.LoadSchema(path, schemas)
+	if err != nil {
+		return nil, err
+	}
+
+	return &validationService{
+		schemas: schemas,
+		next:    s,
+	}, nil
+}

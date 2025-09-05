@@ -1,11 +1,16 @@
 package models
 
 type (
-	EventName string
+	UserEventName string
+	TodoEventName string
 )
 
 const (
-	SignUp  EventName = "user.SIGNUP"
-	Login   EventName = "user.LOGIN"
-	Account EventName = "user.ACCOUNT"
+	SignUp  UserEventName = "user.SIGNUP"
+	Login   UserEventName = "user.LOGIN"
+	Account UserEventName = "user.ACCOUNT"
+)
+
+const (
+	Add TodoEventName = "todo.ADD"
 )

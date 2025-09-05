@@ -14,22 +14,22 @@
       "request": "launch",
       "program": "${workspaceFolder}/user-service/cmd/user/main.go",
       "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Run Todo Serivce",
+      "type": "go",
+      "request": "launch",
+      "program": "${workspaceFolder}/todo-service/cmd/todo/main.go",
+      "cwd": "${workspaceFolder}"
     }
-    // {
-    //   "name": "Run Todo Serivce",
-    //   "type": "go",
-    //   "request": "launch",
-    //   "program": "${workspaceFolder}/todo/cmd/todo/main.go",
-    //   "cwd": "${workspaceFolder}"
-    // }
   ],
   "compounds": [
     {
       "name": "Run All Services",
       "configurations": [
         "Run Gateway Service",
-        "Run User Service"
-        // "Run Todo Serivce"
+        "Run User Service",
+        "Run Todo Serivce"
       ]
     }
   ]
