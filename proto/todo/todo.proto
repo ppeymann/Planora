@@ -9,6 +9,7 @@ import "google/protobuf/timestamp.proto";
 service TodoService {
   rpc AddTodo(AddTodoRequest) returns (Todo);
   rpc UpdateTodo(UpdateTodoRequest) returns (Todo);
+  rpc GetAllTodo(GetAllTodoRequest) returns (Todo);
 }
 
 message BaseModel {
@@ -36,3 +37,5 @@ message UpdateTodoRequest {
   AddTodoRequest todo = 1;
   uint64 id = 2;
 }
+
+message GetAllTodoRequest { uint64 user_id = 1; }
