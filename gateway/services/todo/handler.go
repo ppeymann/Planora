@@ -13,6 +13,12 @@ type handler struct {
 	next models.TodoService
 }
 
+// GetAllTodos implements models.TodoHandler.
+func (h *handler) GetAllTodos(ctx *gin.Context) {
+	result := h.next.GetAllTodos(ctx)
+	ctx.JSON(result.Status, result)
+}
+
 // UpdateTodo implements models.TodoHandler.
 func (h *handler) UpdateTodo(ctx *gin.Context) {
 	in := &models.TodoInput{}
@@ -65,6 +71,7 @@ func NewHandler(srv models.TodoService, s *server.Server) models.TodoHandler {
 	{
 		group.POST("/", handler.AddTodo)
 		group.PATCH("/:id", handler.UpdateTodo)
+		group.GET("/", handler.GetAllTodos)
 	}
 
 	return handler

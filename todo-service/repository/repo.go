@@ -16,7 +16,7 @@ type todoRepo struct {
 func (r *todoRepo) FindAllTodo(userID uint) ([]models.TodoEntity, error) {
 	var todos []models.TodoEntity
 
-	err := r.Model().Where("user_id = ?", userID).Find(todos).Error
+	err := r.Model().Where("user_id = ?", userID).Find(&todos).Error
 	if err != nil {
 		return nil, err
 	}

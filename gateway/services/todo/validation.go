@@ -12,6 +12,11 @@ type validationService struct {
 	next    models.TodoService
 }
 
+// GetAllTodos implements models.TodoService.
+func (v *validationService) GetAllTodos(ctx *gin.Context) *common.BaseResult {
+	return v.next.GetAllTodos(ctx)
+}
+
 // UpdateTodo implements models.TodoService.
 func (v *validationService) UpdateTodo(ctx *gin.Context, in *models.TodoInput, todoID uint64) *common.BaseResult {
 	err := validations.Validate(in, v.schemas)

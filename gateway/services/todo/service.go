@@ -7,13 +7,52 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/nats-io/nats.go"
+	"github.com/ppeymann/Planora.git/pkg/auth"
 	"github.com/ppeymann/Planora.git/pkg/common"
+	"github.com/ppeymann/Planora.git/pkg/utils"
 	todopb "github.com/ppeymann/Planora.git/proto/todo"
 	"github.com/ppeymann/Planora/gateway/models"
 )
 
 type service struct {
 	nc *nats.Conn
+}
+
+// GetAllTodos implements models.TodoService.
+func (s *service) GetAllTodos(ctx *gin.Context) *common.BaseResult {
+	claims := &auth.Claims{}
+	_ = utils.CatchClaims(ctx, claims)
+
+	req := &todopb.GetAllTodoRequest{
+		UserId: uint64(claims.Subject),
+	}
+
+	data, err := json.Marshal(req)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	msg, err := s.nc.Request(string(models.GetAll), data, 2*time.Second)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	op := &common.BaseResult{}
+	err = json.Unmarshal(msg.Data, op)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	return op
 }
 
 // UpdateTodo implements models.TodoService.

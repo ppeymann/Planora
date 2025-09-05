@@ -14,6 +14,20 @@ type authService struct {
 	next models.TodoService
 }
 
+// GetAllTodos implements models.TodoService.
+func (a *authService) GetAllTodos(ctx *gin.Context) *common.BaseResult {
+	claims := &auth.Claims{}
+	err := utils.CatchClaims(ctx, claims)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{common.ErrUnAuthorization.Error()},
+			Status: http.StatusUnauthorized,
+		}
+	}
+
+	return a.next.GetAllTodos(ctx)
+}
+
 // UpdateTodo implements models.TodoService.
 func (a *authService) UpdateTodo(ctx *gin.Context, in *models.TodoInput, todoID uint64) *common.BaseResult {
 	claims := &auth.Claims{}

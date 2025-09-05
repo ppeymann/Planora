@@ -14,6 +14,9 @@ type (
 
 		// UpdateTodo service for update a todo
 		UpdateTodo(ctx *gin.Context, in *TodoInput, todoID uint64) *common.BaseResult
+
+		// GetAllTodos service with specific UserID
+		GetAllTodos(ctx *gin.Context) *common.BaseResult
 	}
 
 	// TodoHandler represents method signatures for todo handlers.
@@ -24,6 +27,9 @@ type (
 
 		// UpdateTodo handler for update a todo
 		UpdateTodo(ctx *gin.Context)
+
+		// GetAllTodos handler with specific UserID
+		GetAllTodos(ctx *gin.Context)
 	}
 
 	// TodoInput for create or update todo
