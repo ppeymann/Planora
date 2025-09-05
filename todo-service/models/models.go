@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/ppeymann/Planora.git/pkg/common"
 	todopb "github.com/ppeymann/Planora.git/proto/todo"
+	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gorm"
 )
 
@@ -41,3 +42,15 @@ const (
 	StatusArchived   StatusType = "ARCHIVED"
 	StatusBlocked    StatusType = "BLOCKED"
 )
+
+const (
+	SubjectAddTodo EventType = "todo.ADD"
+)
+
+func ToBaseModel(t *TodoEntity) *todopb.BaseModel {
+	return &todopb.BaseModel{
+		Id:         uint64(t.ID),
+		CreatedAt:  timestamppb.New(t.CreatedAt),
+		UpdatedeAt: timestamppb.New(t.UpdatedAt),
+	}
+}
