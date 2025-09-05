@@ -26,4 +26,5 @@ message Todo {
 message AddTodoRequest {
   string title = 1;
   string description = 2;
+  uint64 user_id = 3;
 }

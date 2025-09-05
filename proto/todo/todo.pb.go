@@ -170,6 +170,7 @@ type AddTodoRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
 	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	UserId        uint64                 `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -218,6 +219,13 @@ func (x *AddTodoRequest) GetDescription() string {
 	return ""
 }
 
+func (x *AddTodoRequest) GetUserId() uint64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
 var File_todo_todo_proto protoreflect.FileDescriptor
 
 const file_todo_todo_proto_rawDesc = "" +
@@ -236,10 +244,11 @@ const file_todo_todo_proto_rawDesc = "" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x16\n" +
 	"\x06status\x18\x04 \x01(\tR\x06status\x12\x17\n" +
-	"\auser_id\x18\x05 \x01(\x04R\x06userId\"H\n" +
+	"\auser_id\x18\x05 \x01(\x04R\x06userId\"a\n" +
 	"\x0eAddTodoRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription2:\n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\x04R\x06userId2:\n" +
 	"\vTodoService\x12+\n" +
 	"\aAddTodo\x12\x14.todo.AddTodoRequest\x1a\n" +
 	".todo.TodoB\x13Z\x11proto/todo;todopbb\x06proto3"
