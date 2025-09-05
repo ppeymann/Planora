@@ -27,6 +27,9 @@ type (
 
 		// Status
 		Status StatusType `json:"status" gorm:"column:status;default:'DO';check:status IN ('DO','IN_PROGRESS','DONE','ARCHIVED','BLOCKED')"`
+
+		// UserID
+		UserID uint `json:"user_id" gorm:"column:user_id;index;not null"`
 	}
 )
 
