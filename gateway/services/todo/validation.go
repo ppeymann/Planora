@@ -12,6 +12,16 @@ type validationService struct {
 	next    models.TodoService
 }
 
+// UpdateTodo implements models.TodoService.
+func (v *validationService) UpdateTodo(ctx *gin.Context, in *models.TodoInput, todoID uint64) *common.BaseResult {
+	err := validations.Validate(in, v.schemas)
+	if err != nil {
+		return err
+	}
+
+	return v.next.UpdateTodo(ctx, in, todoID)
+}
+
 // AddTodo implements models.TodoService.
 func (v *validationService) AddTodo(ctx *gin.Context, in *models.TodoInput) *common.BaseResult {
 	err := validations.Validate(in, v.schemas)

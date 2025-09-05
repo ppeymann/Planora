@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	todopb "github.com/ppeymann/Planora.git/proto/todo"
 	"github.com/ppeymann/Planora/todo/models"
@@ -37,6 +38,10 @@ func (s *TodoServiceServer) UpdateTodo(_ context.Context, in *todopb.UpdateTodoR
 	todo, err := s.repo.FindByID(uint(in.GetId()))
 	if err != nil {
 		return nil, err
+	}
+
+	if todo.UserID != uint(in.Todo.GetUserId()) {
+		return nil, errors.New("permission denied")
 	}
 
 	todo.Title = in.Todo.GetTitle()

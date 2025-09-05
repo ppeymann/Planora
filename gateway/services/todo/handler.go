@@ -13,6 +13,31 @@ type handler struct {
 	next models.TodoService
 }
 
+// UpdateTodo implements models.TodoHandler.
+func (h *handler) UpdateTodo(ctx *gin.Context) {
+	in := &models.TodoInput{}
+
+	if err := ctx.ShouldBindJSON(in); err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{models.ErrProvideRequiredJsonBody.Error()},
+		})
+
+		return
+	}
+
+	id, err := server.GetPathUint64(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{err.Error()},
+		})
+
+		return
+	}
+
+	result := h.next.UpdateTodo(ctx, in, id)
+	ctx.JSON(result.Status, result)
+}
+
 // AddTodo implements models.TodoHandler.
 func (h *handler) AddTodo(ctx *gin.Context) {
 	in := &models.TodoInput{}
@@ -39,6 +64,7 @@ func NewHandler(srv models.TodoService, s *server.Server) models.TodoHandler {
 	group.Use(s.Authenticate())
 	{
 		group.POST("/", handler.AddTodo)
+		group.PATCH("/:id", handler.UpdateTodo)
 	}
 
 	return handler

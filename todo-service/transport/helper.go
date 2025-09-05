@@ -16,7 +16,7 @@ func HandleAddTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
 }
 
 func HandleUpdateTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
-	resp, err := t.AddTodoService(m.Data)
+	resp, err := t.UpdateTodoService(m.Data)
 	replayData := common.BuildResponse(resp, err)
 
 	if m.Reply != "" {

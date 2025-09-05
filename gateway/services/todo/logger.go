@@ -15,6 +15,23 @@ type loggerService struct {
 	next   models.TodoService
 }
 
+// UpdateTodo implements models.TodoService.
+func (l *loggerService) UpdateTodo(ctx *gin.Context, in *models.TodoInput, todoID uint64) (result *common.BaseResult) {
+	defer func(begin time.Time) {
+		_ = l.logger.Log(
+			"method", "UpdateTodo",
+			"errors", strings.Join(result.Errors, " ,"),
+			"result", result,
+			"input", in,
+			"todo_id", todoID,
+			"client_ip", ctx.ClientIP(),
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+
+	return l.next.UpdateTodo(ctx, in, todoID)
+}
+
 // AddTodo implements models.TodoService.
 func (l *loggerService) AddTodo(ctx *gin.Context, in *models.TodoInput) (result *common.BaseResult) {
 	defer func(begin time.Time) {

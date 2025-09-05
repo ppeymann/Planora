@@ -16,6 +16,45 @@ type service struct {
 	nc *nats.Conn
 }
 
+// UpdateTodo implements models.TodoService.
+func (s *service) UpdateTodo(ctx *gin.Context, in *models.TodoInput, todoID uint64) *common.BaseResult {
+	req := &todopb.UpdateTodoRequest{
+		Todo: &todopb.AddTodoRequest{
+			Title:       in.Title,
+			Description: in.Description,
+			UserId:      uint64(in.UserID),
+		},
+		Id: todoID,
+	}
+
+	data, err := json.Marshal(req)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	msg, err := s.nc.Request(string(models.Update), data, 2*time.Second)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	op := &common.BaseResult{}
+	err = json.Unmarshal(msg.Data, op)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	return op
+}
+
 // AddTodo implements models.TodoService.
 func (s *service) AddTodo(ctx *gin.Context, in *models.TodoInput) *common.BaseResult {
 	req := &todopb.AddTodoRequest{

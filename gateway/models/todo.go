@@ -11,6 +11,9 @@ type (
 	TodoService interface {
 		// AddTodo service for create new todo
 		AddTodo(ctx *gin.Context, in *TodoInput) *common.BaseResult
+
+		// UpdateTodo service for update a todo
+		UpdateTodo(ctx *gin.Context, in *TodoInput, todoID uint64) *common.BaseResult
 	}
 
 	// TodoHandler represents method signatures for todo handlers.
@@ -18,6 +21,9 @@ type (
 	TodoHandler interface {
 		// AddTodo handler for create new todo
 		AddTodo(ctx *gin.Context)
+
+		// UpdateTodo handler for update a todo
+		UpdateTodo(ctx *gin.Context)
 	}
 
 	// TodoInput for create or update todo
