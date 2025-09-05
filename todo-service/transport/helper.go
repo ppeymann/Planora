@@ -23,3 +23,12 @@ func HandleUpdateTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) 
 		nc.Publish(m.Reply, replayData)
 	}
 }
+
+func HandleGetAllTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
+	resp, err := t.GetAllTodoService(m.Data)
+	replay := common.BuildResponse(resp, err)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, replay)
+	}
+}

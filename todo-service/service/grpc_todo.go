@@ -60,3 +60,27 @@ func (s *TodoServiceServer) UpdateTodo(_ context.Context, in *todopb.UpdateTodoR
 		UserId:      uint64(todo.UserID),
 	}, nil
 }
+
+func (s *TodoServiceServer) GetAllTodo(ctx context.Context, in *todopb.GetAllTodoRequest) (*todopb.GetAllTodoResponse, error) {
+	todos, err := s.repo.FindAllTodo(uint(in.GetUserId()))
+	if err != nil {
+		return nil, err
+	}
+
+	var todoResponse []*todopb.Todo
+	for _, todo := range todos {
+		t := todopb.Todo{
+			Model:       models.ToBaseModel(&todo),
+			Title:       todo.Title,
+			Description: todo.Description,
+			Status:      string(todo.Status),
+			UserId:      uint64(todo.UserID),
+		}
+
+		todoResponse = append(todoResponse, &t)
+	}
+
+	return &todopb.GetAllTodoResponse{
+		Todos: todoResponse,
+	}, nil
+}

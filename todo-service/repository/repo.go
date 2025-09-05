@@ -12,6 +12,19 @@ type todoRepo struct {
 	table    string
 }
 
+// FindAllTodo implements models.TodoRepository.
+func (r *todoRepo) FindAllTodo(userID uint) ([]models.TodoEntity, error) {
+	var todos []models.TodoEntity
+
+	err := r.Model().Where("user_id = ?", userID).Find(todos).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return todos, nil
+
+}
+
 // FindByID implements models.TodoRepository.
 func (r *todoRepo) FindByID(id uint) (*models.TodoEntity, error) {
 	todo := &models.TodoEntity{}

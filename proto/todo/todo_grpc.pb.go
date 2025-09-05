@@ -30,7 +30,7 @@ const (
 type TodoServiceClient interface {
 	AddTodo(ctx context.Context, in *AddTodoRequest, opts ...grpc.CallOption) (*Todo, error)
 	UpdateTodo(ctx context.Context, in *UpdateTodoRequest, opts ...grpc.CallOption) (*Todo, error)
-	GetAllTodo(ctx context.Context, in *GetAllTodoRequest, opts ...grpc.CallOption) (*Todo, error)
+	GetAllTodo(ctx context.Context, in *GetAllTodoRequest, opts ...grpc.CallOption) (*GetAllTodoResponse, error)
 }
 
 type todoServiceClient struct {
@@ -61,9 +61,9 @@ func (c *todoServiceClient) UpdateTodo(ctx context.Context, in *UpdateTodoReques
 	return out, nil
 }
 
-func (c *todoServiceClient) GetAllTodo(ctx context.Context, in *GetAllTodoRequest, opts ...grpc.CallOption) (*Todo, error) {
+func (c *todoServiceClient) GetAllTodo(ctx context.Context, in *GetAllTodoRequest, opts ...grpc.CallOption) (*GetAllTodoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Todo)
+	out := new(GetAllTodoResponse)
 	err := c.cc.Invoke(ctx, TodoService_GetAllTodo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -77,7 +77,7 @@ func (c *todoServiceClient) GetAllTodo(ctx context.Context, in *GetAllTodoReques
 type TodoServiceServer interface {
 	AddTodo(context.Context, *AddTodoRequest) (*Todo, error)
 	UpdateTodo(context.Context, *UpdateTodoRequest) (*Todo, error)
-	GetAllTodo(context.Context, *GetAllTodoRequest) (*Todo, error)
+	GetAllTodo(context.Context, *GetAllTodoRequest) (*GetAllTodoResponse, error)
 	mustEmbedUnimplementedTodoServiceServer()
 }
 
@@ -94,7 +94,7 @@ func (UnimplementedTodoServiceServer) AddTodo(context.Context, *AddTodoRequest) 
 func (UnimplementedTodoServiceServer) UpdateTodo(context.Context, *UpdateTodoRequest) (*Todo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTodo not implemented")
 }
-func (UnimplementedTodoServiceServer) GetAllTodo(context.Context, *GetAllTodoRequest) (*Todo, error) {
+func (UnimplementedTodoServiceServer) GetAllTodo(context.Context, *GetAllTodoRequest) (*GetAllTodoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllTodo not implemented")
 }
 func (UnimplementedTodoServiceServer) mustEmbedUnimplementedTodoServiceServer() {}

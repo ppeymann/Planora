@@ -22,6 +22,9 @@ type (
 		// Update
 		Update(t *TodoEntity) error
 
+		// FindAllTodo
+		FindAllTodo(userID uint) ([]TodoEntity, error)
+
 		common.BaseRepository
 	}
 
@@ -56,6 +59,7 @@ const (
 const (
 	SubjectAddTodo    EventType = "todo.ADD"
 	SubjectUpdateTodo EventType = "todo.UPDATE"
+	SubjectGetAllTodo EventType = "todo.GETALL"
 )
 
 func ToBaseModel(t *TodoEntity) *todopb.BaseModel {
