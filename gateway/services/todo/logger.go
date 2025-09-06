@@ -15,6 +15,23 @@ type loggerService struct {
 	next   models.TodoService
 }
 
+// ChangeStatus implements models.TodoService.
+func (l *loggerService) ChangeStatus(ctx *gin.Context, status models.StatusType, id uint64) (result *common.BaseResult) {
+	defer func(begin time.Time) {
+		_ = l.logger.Log(
+			"method", "ChangeStatus",
+			"errors", strings.Join(result.Errors, " ,"),
+			"result", result,
+			"id", id,
+			"status", status,
+			"client_ip", ctx.ClientIP(),
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+
+	return l.next.ChangeStatus(ctx, status, id)
+}
+
 // GetAllTodos implements models.TodoService.
 func (l *loggerService) GetAllTodos(ctx *gin.Context) (result *common.BaseResult) {
 	defer func(begin time.Time) {

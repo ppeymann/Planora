@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TodoService_AddTodo_FullMethodName    = "/todo.TodoService/AddTodo"
-	TodoService_UpdateTodo_FullMethodName = "/todo.TodoService/UpdateTodo"
-	TodoService_GetAllTodo_FullMethodName = "/todo.TodoService/GetAllTodo"
+	TodoService_AddTodo_FullMethodName      = "/todo.TodoService/AddTodo"
+	TodoService_UpdateTodo_FullMethodName   = "/todo.TodoService/UpdateTodo"
+	TodoService_GetAllTodo_FullMethodName   = "/todo.TodoService/GetAllTodo"
+	TodoService_ChangeStatus_FullMethodName = "/todo.TodoService/ChangeStatus"
 )
 
 // TodoServiceClient is the client API for TodoService service.
@@ -31,6 +32,7 @@ type TodoServiceClient interface {
 	AddTodo(ctx context.Context, in *AddTodoRequest, opts ...grpc.CallOption) (*Todo, error)
 	UpdateTodo(ctx context.Context, in *UpdateTodoRequest, opts ...grpc.CallOption) (*Todo, error)
 	GetAllTodo(ctx context.Context, in *GetAllTodoRequest, opts ...grpc.CallOption) (*GetAllTodoResponse, error)
+	ChangeStatus(ctx context.Context, in *ChangeStatusRequest, opts ...grpc.CallOption) (*Todo, error)
 }
 
 type todoServiceClient struct {
@@ -71,6 +73,16 @@ func (c *todoServiceClient) GetAllTodo(ctx context.Context, in *GetAllTodoReques
 	return out, nil
 }
 
+func (c *todoServiceClient) ChangeStatus(ctx context.Context, in *ChangeStatusRequest, opts ...grpc.CallOption) (*Todo, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Todo)
+	err := c.cc.Invoke(ctx, TodoService_ChangeStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TodoServiceServer is the server API for TodoService service.
 // All implementations must embed UnimplementedTodoServiceServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type TodoServiceServer interface {
 	AddTodo(context.Context, *AddTodoRequest) (*Todo, error)
 	UpdateTodo(context.Context, *UpdateTodoRequest) (*Todo, error)
 	GetAllTodo(context.Context, *GetAllTodoRequest) (*GetAllTodoResponse, error)
+	ChangeStatus(context.Context, *ChangeStatusRequest) (*Todo, error)
 	mustEmbedUnimplementedTodoServiceServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedTodoServiceServer) UpdateTodo(context.Context, *UpdateTodoReq
 }
 func (UnimplementedTodoServiceServer) GetAllTodo(context.Context, *GetAllTodoRequest) (*GetAllTodoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllTodo not implemented")
+}
+func (UnimplementedTodoServiceServer) ChangeStatus(context.Context, *ChangeStatusRequest) (*Todo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeStatus not implemented")
 }
 func (UnimplementedTodoServiceServer) mustEmbedUnimplementedTodoServiceServer() {}
 func (UnimplementedTodoServiceServer) testEmbeddedByValue()                     {}
@@ -172,6 +188,24 @@ func _TodoService_GetAllTodo_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TodoService_ChangeStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TodoServiceServer).ChangeStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TodoService_ChangeStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TodoServiceServer).ChangeStatus(ctx, req.(*ChangeStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TodoService_ServiceDesc is the grpc.ServiceDesc for TodoService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var TodoService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllTodo",
 			Handler:    _TodoService_GetAllTodo_Handler,
+		},
+		{
+			MethodName: "ChangeStatus",
+			Handler:    _TodoService_ChangeStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

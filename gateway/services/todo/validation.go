@@ -12,6 +12,11 @@ type validationService struct {
 	next    models.TodoService
 }
 
+// ChangeStatus implements models.TodoService.
+func (v *validationService) ChangeStatus(ctx *gin.Context, status models.StatusType, id uint64) *common.BaseResult {
+	return v.next.ChangeStatus(ctx, status, id)
+}
+
 // GetAllTodos implements models.TodoService.
 func (v *validationService) GetAllTodos(ctx *gin.Context) *common.BaseResult {
 	return v.next.GetAllTodos(ctx)

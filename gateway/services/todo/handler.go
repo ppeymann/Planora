@@ -13,6 +13,30 @@ type handler struct {
 	next models.TodoService
 }
 
+// ChangeStatus implements models.TodoHandler.
+func (h *handler) ChangeStatus(ctx *gin.Context) {
+	status, err := server.GetStringPath("status", ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{err.Error()},
+		})
+
+		return
+	}
+
+	id, err := server.GetPathUint64(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{err.Error()},
+		})
+
+		return
+	}
+
+	result := h.next.ChangeStatus(ctx, models.StatusType(status), id)
+	ctx.JSON(result.Status, result)
+}
+
 // GetAllTodos implements models.TodoHandler.
 func (h *handler) GetAllTodos(ctx *gin.Context) {
 	result := h.next.GetAllTodos(ctx)

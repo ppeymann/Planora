@@ -12,7 +12,8 @@ const (
 )
 
 const (
-	Add    TodoEventName = "todo.ADD"
-	Update TodoEventName = "todo.UPDATE"
-	GetAll TodoEventName = "todo.GETALL"
+	Add          TodoEventName = "todo.ADD"
+	Update       TodoEventName = "todo.UPDATE"
+	GetAll       TodoEventName = "todo.GETALL"
+	ChangeStatus TodoEventName = "todo.CHANGE_STATUS"
 )

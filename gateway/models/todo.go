@@ -6,6 +6,8 @@ import (
 )
 
 type (
+	StatusType string
+
 	// TodoService represents method signatures for api todo endpoint.
 	// so any object that stratifying this interface can be used as todo service for api endpoint.
 	TodoService interface {
@@ -17,6 +19,9 @@ type (
 
 		// GetAllTodos service with specific UserID
 		GetAllTodos(ctx *gin.Context) *common.BaseResult
+
+		// ChangeStatus service is for change todo status
+		ChangeStatus(ctx *gin.Context, status StatusType, id uint64) *common.BaseResult
 	}
 
 	// TodoHandler represents method signatures for todo handlers.
@@ -30,6 +35,9 @@ type (
 
 		// GetAllTodos handler with specific UserID
 		GetAllTodos(ctx *gin.Context)
+
+		// ChangeStatus handler for change todo status
+		ChangeStatus(ctx *gin.Context)
 	}
 
 	// TodoInput for create or update todo
@@ -40,4 +48,12 @@ type (
 		Description string `json:"description"`
 		UserID      uint   `json:"-"`
 	}
+)
+
+const (
+	StatusDo         StatusType = "DO"
+	StatusInProgress StatusType = "IN_PROGRESS"
+	StatusDone       StatusType = "DONE"
+	StatusArchived   StatusType = "ARCHIVED"
+	StatusBlocked    StatusType = "BLOCKED"
 )

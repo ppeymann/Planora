@@ -10,6 +10,7 @@ service TodoService {
   rpc AddTodo(AddTodoRequest) returns (Todo);
   rpc UpdateTodo(UpdateTodoRequest) returns (Todo);
   rpc GetAllTodo(GetAllTodoRequest) returns (GetAllTodoResponse);
+  rpc ChangeStatus(ChangeStatusRequest) returns (Todo);
 }
 
 message BaseModel {
@@ -41,3 +42,9 @@ message UpdateTodoRequest {
 message GetAllTodoRequest { uint64 user_id = 1; }
 
 message GetAllTodoResponse { repeated Todo todos = 1; }
+
+message ChangeStatusRequest {
+  string status = 1;
+  uint64 id = 2;
+  uint64 user_id = 3;
+}
