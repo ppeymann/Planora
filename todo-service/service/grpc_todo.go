@@ -84,3 +84,24 @@ func (s *TodoServiceServer) GetAllTodo(ctx context.Context, in *todopb.GetAllTod
 		Todos: todoResponse,
 	}, nil
 }
+
+func (s *TodoServiceServer) ChangeStatus(ctx context.Context, in *todopb.ChangeStatusRequest) (*todopb.Todo, error) {
+	todo, err := s.repo.FindByID(uint(in.GetId()))
+	if err != nil {
+		return nil, err
+	}
+
+	todo.Status = models.StatusType(in.GetStatus())
+	err = s.repo.Update(todo)
+	if err != nil {
+		return nil, err
+	}
+
+	return &todopb.Todo{
+		Model:       models.ToBaseModel(todo),
+		Title:       todo.Title,
+		Description: todo.Description,
+		Status:      string(todo.Status),
+		UserId:      uint64(todo.UserID),
+	}, nil
+}

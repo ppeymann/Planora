@@ -57,9 +57,10 @@ const (
 )
 
 const (
-	SubjectAddTodo    EventType = "todo.ADD"
-	SubjectUpdateTodo EventType = "todo.UPDATE"
-	SubjectGetAllTodo EventType = "todo.GETALL"
+	SubjectAddTodo      EventType = "todo.ADD"
+	SubjectUpdateTodo   EventType = "todo.UPDATE"
+	SubjectGetAllTodo   EventType = "todo.GETALL"
+	SubjectChangeStatus EventType = "todo.CHANGE_STATUS"
 )
 
 func ToBaseModel(t *TodoEntity) *todopb.BaseModel {

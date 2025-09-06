@@ -64,3 +64,22 @@ func (s *TodoServiceServer) GetAllTodoService(data []byte) (*todopb.GetAllTodoRe
 
 	return todos, nil
 }
+
+func (s *TodoServiceServer) ChangeStatusService(data []byte) (*todopb.Todo, error) {
+	req := &todopb.ChangeStatusRequest{}
+
+	err := json.Unmarshal(data, req)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	todo, err := s.ChangeStatus(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return todo, err
+}

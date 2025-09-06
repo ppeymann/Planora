@@ -32,3 +32,12 @@ func HandleGetAllTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) 
 		nc.Publish(m.Reply, replay)
 	}
 }
+
+func HandleChangeStatus(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
+	resp, err := t.ChangeStatusService(m.Data)
+	replay := common.BuildResponse(resp, err)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, replay)
+	}
+}
