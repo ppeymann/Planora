@@ -105,3 +105,14 @@ func (s *TodoServiceServer) ChangeStatus(ctx context.Context, in *todopb.ChangeS
 		UserId:      uint64(todo.UserID),
 	}, nil
 }
+
+func (s *TodoServiceServer) DeleteTodo(ctx context.Context, req *todopb.DeleteTodoRequest) (*todopb.DeleteTodoResponse, error) {
+	err := s.repo.DeleteTodo(uint(req.GetId()), uint(req.GetUserId()))
+	if err != nil {
+		return nil, err
+	}
+
+	return &todopb.DeleteTodoResponse{
+		Id: req.GetId(),
+	}, nil
+}

@@ -41,3 +41,12 @@ func HandleChangeStatus(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn
 		nc.Publish(m.Reply, replay)
 	}
 }
+
+func HandleDeleteTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
+	resp, err := t.DeleteTodoService(m.Data)
+	reply := common.BuildResponse(resp, err)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, reply)
+	}
+}

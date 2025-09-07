@@ -25,6 +25,9 @@ type (
 		// FindAllTodo
 		FindAllTodo(userID uint) ([]TodoEntity, error)
 
+		// DeleteTodo
+		DeleteTodo(id uint, userID uint) error
+
 		common.BaseRepository
 	}
 
@@ -61,6 +64,7 @@ const (
 	SubjectUpdateTodo   EventType = "todo.UPDATE"
 	SubjectGetAllTodo   EventType = "todo.GETALL"
 	SubjectChangeStatus EventType = "todo.CHANGE_STATUS"
+	SubjectDeleteTodo   EventType = "todo.DELETE"
 )
 
 func ToBaseModel(t *TodoEntity) *todopb.BaseModel {

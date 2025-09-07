@@ -11,6 +11,7 @@ service TodoService {
   rpc UpdateTodo(UpdateTodoRequest) returns (Todo);
   rpc GetAllTodo(GetAllTodoRequest) returns (GetAllTodoResponse);
   rpc ChangeStatus(ChangeStatusRequest) returns (Todo);
+  rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse);
 }
 
 message BaseModel {
@@ -48,3 +49,10 @@ message ChangeStatusRequest {
   uint64 id = 2;
   uint64 user_id = 3;
 }
+
+message DeleteTodoRequest {
+  uint64 id = 1;
+  uint64 user_id = 2;
+}
+
+message DeleteTodoResponse { uint64 id = 1; }

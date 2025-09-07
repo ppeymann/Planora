@@ -83,3 +83,22 @@ func (s *TodoServiceServer) ChangeStatusService(data []byte) (*todopb.Todo, erro
 
 	return todo, err
 }
+
+func (s *TodoServiceServer) DeleteTodoService(data []byte) (*todopb.DeleteTodoResponse, error) {
+	req := &todopb.DeleteTodoRequest{}
+
+	err := json.Unmarshal(data, req)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	res, err := s.DeleteTodo(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}

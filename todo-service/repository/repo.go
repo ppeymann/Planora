@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"errors"
+
 	todopb "github.com/ppeymann/Planora.git/proto/todo"
 	"github.com/ppeymann/Planora/todo/models"
 	"gorm.io/gorm"
@@ -10,6 +12,25 @@ type todoRepo struct {
 	pg       *gorm.DB
 	database string
 	table    string
+}
+
+// DeleteTodo implements models.TodoRepository.
+func (r *todoRepo) DeleteTodo(id uint, userID uint) error {
+	todo, err := r.FindByID(id)
+	if err != nil {
+		return err
+	}
+
+	if todo.UserID != userID {
+		return errors.New("permission denied")
+	}
+
+	err = r.Model().Where("id = ?", id).Delete(todo).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // FindAllTodo implements models.TodoRepository.
