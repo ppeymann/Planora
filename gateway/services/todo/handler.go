@@ -96,6 +96,7 @@ func NewHandler(srv models.TodoService, s *server.Server) models.TodoHandler {
 		group.POST("/", handler.AddTodo)
 		group.PATCH("/:id", handler.UpdateTodo)
 		group.GET("/", handler.GetAllTodos)
+		group.PATCH("/change_status/:id/:status", handler.ChangeStatus)
 	}
 
 	return handler
