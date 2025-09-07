@@ -15,6 +15,22 @@ type loggerService struct {
 	next   models.TodoService
 }
 
+// DeleteTodo implements models.TodoService.
+func (l *loggerService) DeleteTodo(ctx *gin.Context, id uint64) (result *common.BaseResult) {
+	defer func(begin time.Time) {
+		_ = l.logger.Log(
+			"method", "DeleteTodo",
+			"errors", strings.Join(result.Errors, " ,"),
+			"result", result,
+			"id", id,
+			"client_ip", ctx.ClientIP(),
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+
+	return l.next.DeleteTodo(ctx, id)
+}
+
 // ChangeStatus implements models.TodoService.
 func (l *loggerService) ChangeStatus(ctx *gin.Context, status models.StatusType, id uint64) (result *common.BaseResult) {
 	defer func(begin time.Time) {

@@ -18,6 +18,44 @@ type service struct {
 	nc *nats.Conn
 }
 
+// DeleteTodo implements models.TodoService.
+func (s *service) DeleteTodo(ctx *gin.Context, id uint64) *common.BaseResult {
+	claims := &auth.Claims{}
+	_ = utils.CatchClaims(ctx, claims)
+
+	req := &todopb.DeleteTodoRequest{
+		Id:     id,
+		UserId: uint64(claims.Subject),
+	}
+
+	data, err := json.Marshal(req)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	msg, err := s.nc.Request(string(models.Delete), data, 2*time.Second)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	op := &common.BaseResult{}
+	err = json.Unmarshal(msg.Data, op)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	return op
+}
+
 // ChangeStatus implements models.TodoService.
 func (s *service) ChangeStatus(ctx *gin.Context, status models.StatusType, id uint64) *common.BaseResult {
 	claims := &auth.Claims{}

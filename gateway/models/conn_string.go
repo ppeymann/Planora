@@ -16,4 +16,5 @@ const (
 	Update       TodoEventName = "todo.UPDATE"
 	GetAll       TodoEventName = "todo.GETALL"
 	ChangeStatus TodoEventName = "todo.CHANGE_STATUS"
+	Delete       TodoEventName = "todo.DELETE"
 )

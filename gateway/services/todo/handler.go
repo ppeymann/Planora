@@ -13,6 +13,21 @@ type handler struct {
 	next models.TodoService
 }
 
+// DeleteTodo implements models.TodoHandler.
+func (h *handler) DeleteTodo(ctx *gin.Context) {
+	id, err := server.GetPathUint64(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{err.Error()},
+		})
+
+		return
+	}
+
+	result := h.next.DeleteTodo(ctx, id)
+	ctx.JSON(result.Status, result)
+}
+
 // ChangeStatus implements models.TodoHandler.
 func (h *handler) ChangeStatus(ctx *gin.Context) {
 	status, err := server.GetStringPath("status", ctx)
@@ -97,6 +112,7 @@ func NewHandler(srv models.TodoService, s *server.Server) models.TodoHandler {
 		group.PATCH("/:id", handler.UpdateTodo)
 		group.GET("/", handler.GetAllTodos)
 		group.PATCH("/change_status/:id/:status", handler.ChangeStatus)
+		group.DELETE("/:id", handler.DeleteTodo)
 	}
 
 	return handler

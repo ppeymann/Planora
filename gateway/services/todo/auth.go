@@ -14,6 +14,20 @@ type authService struct {
 	next models.TodoService
 }
 
+// DeleteTodo implements models.TodoService.
+func (a *authService) DeleteTodo(ctx *gin.Context, id uint64) *common.BaseResult {
+	claims := &auth.Claims{}
+	err := utils.CatchClaims(ctx, claims)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{common.ErrUnAuthorization.Error()},
+			Status: http.StatusUnauthorized,
+		}
+	}
+
+	return a.next.DeleteTodo(ctx, id)
+}
+
 // ChangeStatus implements models.TodoService.
 func (a *authService) ChangeStatus(ctx *gin.Context, status models.StatusType, id uint64) *common.BaseResult {
 	claims := &auth.Claims{}

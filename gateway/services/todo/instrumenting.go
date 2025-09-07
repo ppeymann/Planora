@@ -15,6 +15,16 @@ type instrumentingService struct {
 	next           models.TodoService
 }
 
+// DeleteTodo implements models.TodoService.
+func (i *instrumentingService) DeleteTodo(ctx *gin.Context, id uint64) *common.BaseResult {
+	defer func(begin time.Time) {
+		i.requestCount.With("method", "DeleteTodo").Add(1)
+		i.requestLatency.With("method", "DeleteTodo").Observe(time.Since(begin).Seconds())
+	}(time.Now())
+
+	return i.next.DeleteTodo(ctx, id)
+}
+
 // ChangeStatus implements models.TodoService.
 func (i *instrumentingService) ChangeStatus(ctx *gin.Context, status models.StatusType, id uint64) *common.BaseResult {
 	defer func(begin time.Time) {

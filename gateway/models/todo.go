@@ -22,6 +22,9 @@ type (
 
 		// ChangeStatus service is for change todo status
 		ChangeStatus(ctx *gin.Context, status StatusType, id uint64) *common.BaseResult
+
+		// DeleteTodo service is for delete todo
+		DeleteTodo(ctx *gin.Context, id uint64) *common.BaseResult
 	}
 
 	// TodoHandler represents method signatures for todo handlers.
@@ -38,6 +41,9 @@ type (
 
 		// ChangeStatus handler for change todo status
 		ChangeStatus(ctx *gin.Context)
+
+		// DeleteTodo handler for delete a todo
+		DeleteTodo(ctx *gin.Context)
 	}
 
 	// TodoInput for create or update todo
