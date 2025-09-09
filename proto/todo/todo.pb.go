@@ -97,6 +97,7 @@ type Todo struct {
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
 	UserId        uint64                 `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	RoomId        uint64                 `protobuf:"varint,6,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -166,11 +167,19 @@ func (x *Todo) GetUserId() uint64 {
 	return 0
 }
 
+func (x *Todo) GetRoomId() uint64 {
+	if x != nil {
+		return x.RoomId
+	}
+	return 0
+}
+
 type AddTodoRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
 	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 	UserId        uint64                 `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	RoomId        *uint64                `protobuf:"varint,4,opt,name=room_id,json=roomId,proto3,oneof" json:"room_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -222,6 +231,13 @@ func (x *AddTodoRequest) GetDescription() string {
 func (x *AddTodoRequest) GetUserId() uint64 {
 	if x != nil {
 		return x.UserId
+	}
+	return 0
+}
+
+func (x *AddTodoRequest) GetRoomId() uint64 {
+	if x != nil && x.RoomId != nil {
+		return *x.RoomId
 	}
 	return 0
 }
@@ -534,17 +550,21 @@ const file_todo_todo_proto_rawDesc = "" +
 	"\vupdatede_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"updatedeAt\x129\n" +
 	"\n" +
-	"deleted_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\"\x96\x01\n" +
+	"deleted_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\"\xaf\x01\n" +
 	"\x04Todo\x12%\n" +
 	"\x05model\x18\x01 \x01(\v2\x0f.todo.BaseModelR\x05model\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x16\n" +
 	"\x06status\x18\x04 \x01(\tR\x06status\x12\x17\n" +
-	"\auser_id\x18\x05 \x01(\x04R\x06userId\"a\n" +
+	"\auser_id\x18\x05 \x01(\x04R\x06userId\x12\x17\n" +
+	"\aroom_id\x18\x06 \x01(\x04R\x06roomId\"\x8b\x01\n" +
 	"\x0eAddTodoRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\x04R\x06userId\"M\n" +
+	"\auser_id\x18\x03 \x01(\x04R\x06userId\x12\x1c\n" +
+	"\aroom_id\x18\x04 \x01(\x04H\x00R\x06roomId\x88\x01\x01B\n" +
+	"\n" +
+	"\b_room_id\"M\n" +
 	"\x11UpdateTodoRequest\x12(\n" +
 	"\x04todo\x18\x01 \x01(\v2\x14.todo.AddTodoRequestR\x04todo\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\x04R\x02id\",\n" +
@@ -629,6 +649,7 @@ func file_todo_todo_proto_init() {
 	if File_todo_todo_proto != nil {
 		return
 	}
+	file_todo_todo_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

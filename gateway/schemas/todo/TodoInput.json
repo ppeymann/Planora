@@ -9,6 +9,9 @@
         },
         "description": {
             "type":"string"
+        },
+        "room_id": {
+            "type": "integer"
         }
     },
     "required": [

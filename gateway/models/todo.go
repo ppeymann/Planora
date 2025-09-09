@@ -53,6 +53,7 @@ type (
 		Title       string `json:"title"`
 		Description string `json:"description"`
 		UserID      uint   `json:"-"`
+		RoomID      uint   `json:"room_id"`
 	}
 )
 

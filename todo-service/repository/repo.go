@@ -72,6 +72,10 @@ func (r *todoRepo) Create(in *todopb.AddTodoRequest) (*models.TodoEntity, error)
 		UserID:      uint(in.GetUserId()),
 	}
 
+	if in.GetRoomId() != 0 {
+		todo.RoomID = uint(in.GetRoomId())
+	}
+
 	if err := r.Model().Create(todo).Error; err != nil {
 		return nil, err
 	}
