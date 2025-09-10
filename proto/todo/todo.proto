@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package todo;
 
-option go_package = "proto/todo;todopb";
+option go_package = "github.com/ppeymann/Planora.git/proto/todo;todopb";
 
 import "google/protobuf/timestamp.proto";
 

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package room;
+
+option go_package = "github.com/ppeymann/Planora.git/proto/room;roompb";
+
+import "google/protobuf/timestamp.proto";
+import "proto/user/user.proto";
+import "proto/todo/todo.proto";
+
+service RoomService { rpc Create(CreateRoomRequest) returns (Room); }
+
+message BaseModel {
+  uint64 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updatede_at = 3;
+  google.protobuf.Timestamp deleted_at = 4;
+}
+
+message CreateRoomRequest {
+  string name = 1;
+  uint64 creator_id = 2;
+}
+
+message Room {
+  BaseModel model = 1;
+  string name = 2;
+  uint64 creator_id = 3;
+  repeated user.User users = 4;
+  repeated todo.Todo todos = 5;
+}
