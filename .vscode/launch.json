@@ -21,6 +21,13 @@
       "request": "launch",
       "program": "${workspaceFolder}/todo-service/cmd/todo/main.go",
       "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Run Room Serivce",
+      "type": "go",
+      "request": "launch",
+      "program": "${workspaceFolder}/room-service/cmd/room/main.go",
+      "cwd": "${workspaceFolder}"
     }
   ],
   "compounds": [
@@ -29,7 +36,8 @@
       "configurations": [
         "Run Gateway Service",
         "Run User Service",
-        "Run Todo Serivce"
+        "Run Todo Serivce",
+        "Run Room Serivce"
       ]
     }
   ]

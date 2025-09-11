@@ -5,7 +5,6 @@ package room;
 option go_package = "github.com/ppeymann/Planora.git/proto/room;roompb";
 
 import "google/protobuf/timestamp.proto";
-import "proto/todo/todo.proto";
 
 service RoomService { rpc Create(CreateRoomRequest) returns (Room); }
 
@@ -26,5 +25,5 @@ message Room {
   string name = 2;
   uint64 creator_id = 3;
   repeated uint64 user_ids = 4;
-  repeated todo.Todo todos = 5;
+  repeated uint64 todo_ids = 5;
 }

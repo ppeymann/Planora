@@ -19,6 +19,14 @@ func NewRoomServiceServer(r models.RoomRepository) *RoomServiceServer {
 }
 
 func (s *RoomServiceServer) Create(_ context.Context, in *roompb.CreateRoomRequest) (*roompb.Room, error) {
-	// room, err := s.repo
-	return nil, nil
+	room, err := s.repo.Create(in)
+	if err != nil {
+		return nil, err
+	}
+
+	return &roompb.Room{
+		Model:     models.ToBaseModel(room),
+		Name:      room.Name,
+		CreatorId: in.CreatorId,
+	}, nil
 }

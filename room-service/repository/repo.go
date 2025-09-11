@@ -12,14 +12,34 @@ type roomRepo struct {
 	table    string
 }
 
+// Migrate implements models.RoomRepository.
+func (r *roomRepo) Migrate() error {
+	return r.pg.AutoMigrate(&models.RoomEntity{})
+}
+
+// Model implements models.RoomRepository.
+func (r *roomRepo) Model() *gorm.DB {
+	return r.pg.Model(&models.RoomEntity{})
+}
+
+// Name implements models.RoomRepository.
+func (r *roomRepo) Name() string {
+	return r.table
+}
+
 // Create implements models.RoomRepository.
 func (r *roomRepo) Create(in *roompb.CreateRoomRequest) (*models.RoomEntity, error) {
-	_ = &models.RoomEntity{
+	room := &models.RoomEntity{
 		Name:      in.GetName(),
 		CreatorID: in.GetCreatorId(),
 	}
 
-	return nil, nil
+	err := r.Model().Create(room).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return room, nil
 }
 
 func NewRoomRepo(db *gorm.DB, database string) models.RoomRepository {

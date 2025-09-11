@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.7
 // 	protoc        v4.25.2
-// source: proto/todo/todo.proto
+// source: todo/todo.proto
 
 package todopb
 
@@ -34,7 +34,7 @@ type BaseModel struct {
 
 func (x *BaseModel) Reset() {
 	*x = BaseModel{}
-	mi := &file_proto_todo_todo_proto_msgTypes[0]
+	mi := &file_todo_todo_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +46,7 @@ func (x *BaseModel) String() string {
 func (*BaseModel) ProtoMessage() {}
 
 func (x *BaseModel) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[0]
+	mi := &file_todo_todo_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +59,7 @@ func (x *BaseModel) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BaseModel.ProtoReflect.Descriptor instead.
 func (*BaseModel) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{0}
+	return file_todo_todo_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *BaseModel) GetId() uint64 {
@@ -104,7 +104,7 @@ type Todo struct {
 
 func (x *Todo) Reset() {
 	*x = Todo{}
-	mi := &file_proto_todo_todo_proto_msgTypes[1]
+	mi := &file_todo_todo_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -116,7 +116,7 @@ func (x *Todo) String() string {
 func (*Todo) ProtoMessage() {}
 
 func (x *Todo) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[1]
+	mi := &file_todo_todo_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -129,7 +129,7 @@ func (x *Todo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Todo.ProtoReflect.Descriptor instead.
 func (*Todo) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{1}
+	return file_todo_todo_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Todo) GetModel() *BaseModel {
@@ -186,7 +186,7 @@ type AddTodoRequest struct {
 
 func (x *AddTodoRequest) Reset() {
 	*x = AddTodoRequest{}
-	mi := &file_proto_todo_todo_proto_msgTypes[2]
+	mi := &file_todo_todo_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -198,7 +198,7 @@ func (x *AddTodoRequest) String() string {
 func (*AddTodoRequest) ProtoMessage() {}
 
 func (x *AddTodoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[2]
+	mi := &file_todo_todo_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -211,7 +211,7 @@ func (x *AddTodoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddTodoRequest.ProtoReflect.Descriptor instead.
 func (*AddTodoRequest) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{2}
+	return file_todo_todo_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *AddTodoRequest) GetTitle() string {
@@ -252,7 +252,7 @@ type UpdateTodoRequest struct {
 
 func (x *UpdateTodoRequest) Reset() {
 	*x = UpdateTodoRequest{}
-	mi := &file_proto_todo_todo_proto_msgTypes[3]
+	mi := &file_todo_todo_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -264,7 +264,7 @@ func (x *UpdateTodoRequest) String() string {
 func (*UpdateTodoRequest) ProtoMessage() {}
 
 func (x *UpdateTodoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[3]
+	mi := &file_todo_todo_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -277,7 +277,7 @@ func (x *UpdateTodoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTodoRequest.ProtoReflect.Descriptor instead.
 func (*UpdateTodoRequest) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{3}
+	return file_todo_todo_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *UpdateTodoRequest) GetTodo() *AddTodoRequest {
@@ -303,7 +303,7 @@ type GetAllTodoRequest struct {
 
 func (x *GetAllTodoRequest) Reset() {
 	*x = GetAllTodoRequest{}
-	mi := &file_proto_todo_todo_proto_msgTypes[4]
+	mi := &file_todo_todo_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -315,7 +315,7 @@ func (x *GetAllTodoRequest) String() string {
 func (*GetAllTodoRequest) ProtoMessage() {}
 
 func (x *GetAllTodoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[4]
+	mi := &file_todo_todo_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -328,7 +328,7 @@ func (x *GetAllTodoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllTodoRequest.ProtoReflect.Descriptor instead.
 func (*GetAllTodoRequest) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{4}
+	return file_todo_todo_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetAllTodoRequest) GetUserId() uint64 {
@@ -347,7 +347,7 @@ type GetAllTodoResponse struct {
 
 func (x *GetAllTodoResponse) Reset() {
 	*x = GetAllTodoResponse{}
-	mi := &file_proto_todo_todo_proto_msgTypes[5]
+	mi := &file_todo_todo_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -359,7 +359,7 @@ func (x *GetAllTodoResponse) String() string {
 func (*GetAllTodoResponse) ProtoMessage() {}
 
 func (x *GetAllTodoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[5]
+	mi := &file_todo_todo_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -372,7 +372,7 @@ func (x *GetAllTodoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllTodoResponse.ProtoReflect.Descriptor instead.
 func (*GetAllTodoResponse) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{5}
+	return file_todo_todo_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetAllTodoResponse) GetTodos() []*Todo {
@@ -393,7 +393,7 @@ type ChangeStatusRequest struct {
 
 func (x *ChangeStatusRequest) Reset() {
 	*x = ChangeStatusRequest{}
-	mi := &file_proto_todo_todo_proto_msgTypes[6]
+	mi := &file_todo_todo_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -405,7 +405,7 @@ func (x *ChangeStatusRequest) String() string {
 func (*ChangeStatusRequest) ProtoMessage() {}
 
 func (x *ChangeStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[6]
+	mi := &file_todo_todo_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -418,7 +418,7 @@ func (x *ChangeStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangeStatusRequest.ProtoReflect.Descriptor instead.
 func (*ChangeStatusRequest) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{6}
+	return file_todo_todo_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ChangeStatusRequest) GetStatus() string {
@@ -452,7 +452,7 @@ type DeleteTodoRequest struct {
 
 func (x *DeleteTodoRequest) Reset() {
 	*x = DeleteTodoRequest{}
-	mi := &file_proto_todo_todo_proto_msgTypes[7]
+	mi := &file_todo_todo_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -464,7 +464,7 @@ func (x *DeleteTodoRequest) String() string {
 func (*DeleteTodoRequest) ProtoMessage() {}
 
 func (x *DeleteTodoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[7]
+	mi := &file_todo_todo_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -477,7 +477,7 @@ func (x *DeleteTodoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTodoRequest.ProtoReflect.Descriptor instead.
 func (*DeleteTodoRequest) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{7}
+	return file_todo_todo_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *DeleteTodoRequest) GetId() uint64 {
@@ -503,7 +503,7 @@ type DeleteTodoResponse struct {
 
 func (x *DeleteTodoResponse) Reset() {
 	*x = DeleteTodoResponse{}
-	mi := &file_proto_todo_todo_proto_msgTypes[8]
+	mi := &file_todo_todo_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -515,7 +515,7 @@ func (x *DeleteTodoResponse) String() string {
 func (*DeleteTodoResponse) ProtoMessage() {}
 
 func (x *DeleteTodoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_todo_todo_proto_msgTypes[8]
+	mi := &file_todo_todo_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -528,7 +528,7 @@ func (x *DeleteTodoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTodoResponse.ProtoReflect.Descriptor instead.
 func (*DeleteTodoResponse) Descriptor() ([]byte, []int) {
-	return file_proto_todo_todo_proto_rawDescGZIP(), []int{8}
+	return file_todo_todo_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *DeleteTodoResponse) GetId() uint64 {
@@ -538,11 +538,11 @@ func (x *DeleteTodoResponse) GetId() uint64 {
 	return 0
 }
 
-var File_proto_todo_todo_proto protoreflect.FileDescriptor
+var File_todo_todo_proto protoreflect.FileDescriptor
 
-const file_proto_todo_todo_proto_rawDesc = "" +
+const file_todo_todo_proto_rawDesc = "" +
 	"\n" +
-	"\x15proto/todo/todo.proto\x12\x04todo\x1a\x1fgoogle/protobuf/timestamp.proto\"\xce\x01\n" +
+	"\x0ftodo/todo.proto\x12\x04todo\x1a\x1fgoogle/protobuf/timestamp.proto\"\xce\x01\n" +
 	"\tBaseModel\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x129\n" +
 	"\n" +
@@ -596,19 +596,19 @@ const file_proto_todo_todo_proto_rawDesc = "" +
 	"DeleteTodo\x12\x17.todo.DeleteTodoRequest\x1a\x18.todo.DeleteTodoResponseB3Z1github.com/ppeymann/Planora.git/proto/todo;todopbb\x06proto3"
 
 var (
-	file_proto_todo_todo_proto_rawDescOnce sync.Once
-	file_proto_todo_todo_proto_rawDescData []byte
+	file_todo_todo_proto_rawDescOnce sync.Once
+	file_todo_todo_proto_rawDescData []byte
 )
 
-func file_proto_todo_todo_proto_rawDescGZIP() []byte {
-	file_proto_todo_todo_proto_rawDescOnce.Do(func() {
-		file_proto_todo_todo_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_todo_todo_proto_rawDesc), len(file_proto_todo_todo_proto_rawDesc)))
+func file_todo_todo_proto_rawDescGZIP() []byte {
+	file_todo_todo_proto_rawDescOnce.Do(func() {
+		file_todo_todo_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_todo_todo_proto_rawDesc), len(file_todo_todo_proto_rawDesc)))
 	})
-	return file_proto_todo_todo_proto_rawDescData
+	return file_todo_todo_proto_rawDescData
 }
 
-var file_proto_todo_todo_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
-var file_proto_todo_todo_proto_goTypes = []any{
+var file_todo_todo_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_todo_todo_proto_goTypes = []any{
 	(*BaseModel)(nil),             // 0: todo.BaseModel
 	(*Todo)(nil),                  // 1: todo.Todo
 	(*AddTodoRequest)(nil),        // 2: todo.AddTodoRequest
@@ -620,7 +620,7 @@ var file_proto_todo_todo_proto_goTypes = []any{
 	(*DeleteTodoResponse)(nil),    // 8: todo.DeleteTodoResponse
 	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
 }
-var file_proto_todo_todo_proto_depIdxs = []int32{
+var file_todo_todo_proto_depIdxs = []int32{
 	9,  // 0: todo.BaseModel.created_at:type_name -> google.protobuf.Timestamp
 	9,  // 1: todo.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
 	9,  // 2: todo.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
@@ -644,27 +644,27 @@ var file_proto_todo_todo_proto_depIdxs = []int32{
 	0,  // [0:6] is the sub-list for field type_name
 }
 
-func init() { file_proto_todo_todo_proto_init() }
-func file_proto_todo_todo_proto_init() {
-	if File_proto_todo_todo_proto != nil {
+func init() { file_todo_todo_proto_init() }
+func file_todo_todo_proto_init() {
+	if File_todo_todo_proto != nil {
 		return
 	}
-	file_proto_todo_todo_proto_msgTypes[2].OneofWrappers = []any{}
+	file_todo_todo_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_todo_todo_proto_rawDesc), len(file_proto_todo_todo_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_todo_todo_proto_rawDesc), len(file_todo_todo_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_proto_todo_todo_proto_goTypes,
-		DependencyIndexes: file_proto_todo_todo_proto_depIdxs,
-		MessageInfos:      file_proto_todo_todo_proto_msgTypes,
+		GoTypes:           file_todo_todo_proto_goTypes,
+		DependencyIndexes: file_todo_todo_proto_depIdxs,
+		MessageInfos:      file_todo_todo_proto_msgTypes,
 	}.Build()
-	File_proto_todo_todo_proto = out.File
-	file_proto_todo_todo_proto_goTypes = nil
-	file_proto_todo_todo_proto_depIdxs = nil
+	File_todo_todo_proto = out.File
+	file_todo_todo_proto_goTypes = nil
+	file_todo_todo_proto_depIdxs = nil
 }
