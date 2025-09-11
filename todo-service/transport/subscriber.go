@@ -2,6 +2,7 @@ package transport
 
 import (
 	"github.com/nats-io/nats.go"
+
 	"github.com/ppeymann/Planora/todo/models"
 	"github.com/ppeymann/Planora/todo/service"
 )
