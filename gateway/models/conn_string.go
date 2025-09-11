@@ -3,6 +3,7 @@ package models
 type (
 	UserEventName string
 	TodoEventName string
+	RoomEventName string
 )
 
 const (
@@ -17,4 +18,8 @@ const (
 	GetAll       TodoEventName = "todo.GETALL"
 	ChangeStatus TodoEventName = "todo.CHANGE_STATUS"
 	Delete       TodoEventName = "todo.DELETE"
+)
+
+const (
+	CreateRoom RoomEventName = "room.CREATE"
 )

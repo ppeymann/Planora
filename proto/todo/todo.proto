@@ -34,7 +34,7 @@ message AddTodoRequest {
   string title = 1;
   string description = 2;
   uint64 user_id = 3;
-  optional uint64 room_id = 4;
+  uint64 room_id = 4;
 }
 
 message UpdateTodoRequest {

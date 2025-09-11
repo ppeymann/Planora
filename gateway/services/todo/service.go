@@ -178,6 +178,7 @@ func (s *service) AddTodo(ctx *gin.Context, in *models.TodoInput) *common.BaseRe
 		Title:       in.Title,
 		Description: in.Description,
 		UserId:      uint64(in.UserID),
+		RoomId:      uint64(in.RoomID),
 	}
 
 	data, err := json.Marshal(req)

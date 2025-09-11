@@ -47,6 +47,9 @@ func main() {
 	// Todo
 	pkg.InitTodoService(nc, sl, svr)
 
+	// Room
+	pkg.InitRoomService(nc, sl, svr)
+
 	// listen and serve...
 	svr.Listen()
 
