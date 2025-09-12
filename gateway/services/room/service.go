@@ -16,6 +16,11 @@ type service struct {
 	nc *nats.Conn
 }
 
+// GetRoom implements models.RoomService.
+func (s *service) GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult {
+
+}
+
 // Create implements models.RoomService.
 func (s *service) Create(ctx *gin.Context, in *models.RoomInput) *common.BaseResult {
 	req := &roompb.CreateRoomRequest{

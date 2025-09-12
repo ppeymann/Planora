@@ -306,6 +306,110 @@ func (x *GetUsersResponse) GetUserIds() []uint64 {
 	return nil
 }
 
+type GetRoomRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RoomId        uint64                 `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	CreatorId     uint64                 `protobuf:"varint,2,opt,name=creator_id,json=creatorId,proto3" json:"creator_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRoomRequest) Reset() {
+	*x = GetRoomRequest{}
+	mi := &file_room_room_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRoomRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRoomRequest) ProtoMessage() {}
+
+func (x *GetRoomRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_room_room_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRoomRequest.ProtoReflect.Descriptor instead.
+func (*GetRoomRequest) Descriptor() ([]byte, []int) {
+	return file_room_room_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetRoomRequest) GetRoomId() uint64 {
+	if x != nil {
+		return x.RoomId
+	}
+	return 0
+}
+
+func (x *GetRoomRequest) GetCreatorId() uint64 {
+	if x != nil {
+		return x.CreatorId
+	}
+	return 0
+}
+
+type GetRoomResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Model         *BaseModel             `protobuf:"bytes,1,opt,name=model,proto3" json:"model,omitempty"`
+	Room          *Room                  `protobuf:"bytes,2,opt,name=room,proto3" json:"room,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRoomResponse) Reset() {
+	*x = GetRoomResponse{}
+	mi := &file_room_room_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRoomResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRoomResponse) ProtoMessage() {}
+
+func (x *GetRoomResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_room_room_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRoomResponse.ProtoReflect.Descriptor instead.
+func (*GetRoomResponse) Descriptor() ([]byte, []int) {
+	return file_room_room_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetRoomResponse) GetModel() *BaseModel {
+	if x != nil {
+		return x.Model
+	}
+	return nil
+}
+
+func (x *GetRoomResponse) GetRoom() *Room {
+	if x != nil {
+		return x.Room
+	}
+	return nil
+}
+
 var File_room_room_proto protoreflect.FileDescriptor
 
 const file_room_room_proto_rawDesc = "" +
@@ -333,11 +437,20 @@ const file_room_room_proto_rawDesc = "" +
 	"\x0fGetUsersRequest\x12\x17\n" +
 	"\aroom_id\x18\x01 \x01(\x04R\x06roomId\"-\n" +
 	"\x10GetUsersResponse\x12\x19\n" +
-	"\buser_ids\x18\x01 \x03(\x04R\auserIds2w\n" +
+	"\buser_ids\x18\x01 \x03(\x04R\auserIds\"H\n" +
+	"\x0eGetRoomRequest\x12\x17\n" +
+	"\aroom_id\x18\x01 \x01(\x04R\x06roomId\x12\x1d\n" +
+	"\n" +
+	"creator_id\x18\x02 \x01(\x04R\tcreatorId\"X\n" +
+	"\x0fGetRoomResponse\x12%\n" +
+	"\x05model\x18\x01 \x01(\v2\x0f.room.BaseModelR\x05model\x12\x1e\n" +
+	"\x04room\x18\x02 \x01(\v2\n" +
+	".room.RoomR\x04room2\xaf\x01\n" +
 	"\vRoomService\x12-\n" +
 	"\x06Create\x12\x17.room.CreateRoomRequest\x1a\n" +
 	".room.Room\x129\n" +
-	"\bGetUsers\x12\x15.room.GetUsersRequest\x1a\x16.room.GetUsersResponseB3Z1github.com/ppeymann/Planora.git/proto/room;roompbb\x06proto3"
+	"\bGetUsers\x12\x15.room.GetUsersRequest\x1a\x16.room.GetUsersResponse\x126\n" +
+	"\aGetRoom\x12\x14.room.GetRoomRequest\x1a\x15.room.GetRoomResponseB3Z1github.com/ppeymann/Planora.git/proto/room;roompbb\x06proto3"
 
 var (
 	file_room_room_proto_rawDescOnce sync.Once
@@ -351,29 +464,35 @@ func file_room_room_proto_rawDescGZIP() []byte {
 	return file_room_room_proto_rawDescData
 }
 
-var file_room_room_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_room_room_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_room_room_proto_goTypes = []any{
 	(*BaseModel)(nil),             // 0: room.BaseModel
 	(*CreateRoomRequest)(nil),     // 1: room.CreateRoomRequest
 	(*Room)(nil),                  // 2: room.Room
 	(*GetUsersRequest)(nil),       // 3: room.GetUsersRequest
 	(*GetUsersResponse)(nil),      // 4: room.GetUsersResponse
-	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
+	(*GetRoomRequest)(nil),        // 5: room.GetRoomRequest
+	(*GetRoomResponse)(nil),       // 6: room.GetRoomResponse
+	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
 }
 var file_room_room_proto_depIdxs = []int32{
-	5, // 0: room.BaseModel.created_at:type_name -> google.protobuf.Timestamp
-	5, // 1: room.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
-	5, // 2: room.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
+	7, // 0: room.BaseModel.created_at:type_name -> google.protobuf.Timestamp
+	7, // 1: room.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
+	7, // 2: room.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
 	0, // 3: room.Room.model:type_name -> room.BaseModel
-	1, // 4: room.RoomService.Create:input_type -> room.CreateRoomRequest
-	3, // 5: room.RoomService.GetUsers:input_type -> room.GetUsersRequest
-	2, // 6: room.RoomService.Create:output_type -> room.Room
-	4, // 7: room.RoomService.GetUsers:output_type -> room.GetUsersResponse
-	6, // [6:8] is the sub-list for method output_type
-	4, // [4:6] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0, // 4: room.GetRoomResponse.model:type_name -> room.BaseModel
+	2, // 5: room.GetRoomResponse.room:type_name -> room.Room
+	1, // 6: room.RoomService.Create:input_type -> room.CreateRoomRequest
+	3, // 7: room.RoomService.GetUsers:input_type -> room.GetUsersRequest
+	5, // 8: room.RoomService.GetRoom:input_type -> room.GetRoomRequest
+	2, // 9: room.RoomService.Create:output_type -> room.Room
+	4, // 10: room.RoomService.GetUsers:output_type -> room.GetUsersResponse
+	6, // 11: room.RoomService.GetRoom:output_type -> room.GetRoomResponse
+	9, // [9:12] is the sub-list for method output_type
+	6, // [6:9] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_room_room_proto_init() }
@@ -387,7 +506,7 @@ func file_room_room_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_room_room_proto_rawDesc), len(file_room_room_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

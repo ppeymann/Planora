@@ -9,6 +9,7 @@ import "google/protobuf/timestamp.proto";
 service RoomService {
   rpc Create(CreateRoomRequest) returns (Room);
   rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+  rpc GetRoom(GetRoomRequest) returns (GetRoomResponse);
 }
 
 message BaseModel {
@@ -34,3 +35,13 @@ message Room {
 message GetUsersRequest { uint64 room_id = 1; }
 
 message GetUsersResponse { repeated uint64 user_ids = 1; }
+
+message GetRoomRequest {
+  uint64 room_id = 1;
+  uint64 creator_id = 2;
+}
+
+message GetRoomResponse {
+  BaseModel model = 1;
+  Room room = 2;
+}

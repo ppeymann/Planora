@@ -12,6 +12,11 @@ type validationService struct {
 	next    models.RoomService
 }
 
+// GetRoom implements models.RoomService.
+func (v *validationService) GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult {
+	return v.next.GetRoom(ctx, roomID)
+}
+
 // Create implements models.RoomService.
 func (v *validationService) Create(ctx *gin.Context, in *models.RoomInput) *common.BaseResult {
 	err := validations.Validate(in, v.schemas)

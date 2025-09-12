@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gorm"
 
 	"github.com/ppeymann/Planora.git/pkg/common"
@@ -30,6 +31,9 @@ type (
 
 		// FindByID find user with ID
 		FindByID(id uint) (*UserEntity, error)
+
+		// GetRoomUsers for find all users in specific Room
+		GetRoomUsers(ids []uint64) ([]UserEntity, error)
 
 		common.BaseRepository
 	}
@@ -68,7 +72,16 @@ type (
 )
 
 const (
-	Signup  EventType = "user.SIGNUP"
-	Login   EventType = "user.LOGIN"
-	Account EventType = "user.ACCOUNT"
+	Signup       EventType = "user.SIGNUP"
+	Login        EventType = "user.LOGIN"
+	Account      EventType = "user.ACCOUNT"
+	GetRoomUsers EventType = "user.ROOM_USERS"
 )
+
+func ToBaseModel(u UserEntity) *userpb.BaseModel {
+	return &userpb.BaseModel{
+		Id:         uint64(u.ID),
+		CreatedAt:  timestamppb.New(u.CreatedAt),
+		UpdatedeAt: timestamppb.New(u.UpdatedAt),
+	}
+}

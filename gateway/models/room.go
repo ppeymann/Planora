@@ -11,6 +11,9 @@ type (
 	RoomService interface {
 		// Create is service for create room
 		Create(ctx *gin.Context, in *RoomInput) *common.BaseResult
+
+		// GetRoom with users and todos and creator information
+		GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult
 	}
 
 	// RoomHandler represents method signatures for room handlers.
@@ -18,6 +21,9 @@ type (
 	RoomHandler interface {
 		// Create is handler for create room
 		Create(ctx *gin.Context)
+
+		// GetRoom with all information
+		GetRoom(ctx *gin.Context)
 	}
 
 	RoomInput struct {

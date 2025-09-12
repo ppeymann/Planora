@@ -17,6 +17,25 @@ type userRepo struct {
 	table    string
 }
 
+// GetRoomUsers implements models.UserRepository.
+func (r *userRepo) GetRoomUsers(ids []uint64) ([]models.UserEntity, error) {
+	var users []models.UserEntity
+	if len(ids) == 0 {
+		return users, nil
+	}
+
+	uids := make([]uint, len(ids))
+	for i, id := range ids {
+		uids[i] = uint(id)
+	}
+
+	if err := r.Model().Where("id IN ?", ids).Find(&users).Error; err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
 // FindByID implements models.UserRepository.
 func (r *userRepo) FindByID(id uint) (*models.UserEntity, error) {
 	user := &models.UserEntity{}

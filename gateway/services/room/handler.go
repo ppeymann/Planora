@@ -13,6 +13,21 @@ type handler struct {
 	next models.RoomService
 }
 
+// GetRoom implements models.RoomHandler.
+func (h *handler) GetRoom(ctx *gin.Context) {
+	id, err := server.GetPathUint64(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{err.Error()},
+		})
+
+		return
+	}
+
+	result := h.next.GetRoom(ctx, id)
+	ctx.JSON(result.Status, result)
+}
+
 // Create implements models.RoomHandler.
 func (h *handler) Create(ctx *gin.Context) {
 	in := &models.RoomInput{}

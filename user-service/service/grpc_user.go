@@ -80,3 +80,27 @@ func (s *UserServiceServer) Account(ctx context.Context, in *userpb.AccountReque
 		LastName:  user.LastName,
 	}, nil
 }
+
+func (s *UserServiceServer) GetRoomUsers(ctx context.Context, in *userpb.GetRoomUsersRequest) (*userpb.GetRoomUsersResponse, error) {
+	users, err := s.repo.GetRoomUsers(in.GetIds())
+	if err != nil {
+		return nil, err
+	}
+
+	var usersResponse []*userpb.User
+	for _, user := range users {
+		u := &userpb.User{
+			Model:     models.ToBaseModel(user),
+			Username:  user.Username,
+			Email:     user.Email,
+			FirstName: user.FirstName,
+			LastName:  user.LastName,
+		}
+
+		usersResponse = append(usersResponse, u)
+	}
+
+	return &userpb.GetRoomUsersResponse{
+		Users: usersResponse,
+	}, nil
+}

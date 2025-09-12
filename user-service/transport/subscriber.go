@@ -9,9 +9,10 @@ import (
 
 func RegisterUserSubscriber(nc *nats.Conn, userService *service.UserServiceServer) {
 	handler := map[models.EventType]func(*nats.Msg){
-		models.Signup:  func(m *nats.Msg) { HandlerCreate(m, userService, nc) },
-		models.Login:   func(m *nats.Msg) { HandleLogin(m, userService, nc) },
-		models.Account: func(m *nats.Msg) { HandleAccount(m, userService, nc) },
+		models.Signup:       func(m *nats.Msg) { HandlerCreate(m, userService, nc) },
+		models.Login:        func(m *nats.Msg) { HandleLogin(m, userService, nc) },
+		models.Account:      func(m *nats.Msg) { HandleAccount(m, userService, nc) },
+		models.GetRoomUsers: func(m *nats.Msg) { HandleGetRoomUsers(m, userService, nc) },
 	}
 
 	nc.Subscribe("user.*", func(m *nats.Msg) {

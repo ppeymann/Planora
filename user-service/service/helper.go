@@ -106,3 +106,22 @@ func (s *UserServiceServer) AccountService(data []byte) (*userpb.User, error) {
 
 	return user, nil
 }
+
+func (s *UserServiceServer) GetRoomUsersService(data []byte) (*userpb.GetRoomUsersResponse, error) {
+	req := &userpb.GetRoomUsersRequest{}
+
+	err := json.Unmarshal(data, req)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	users, err := s.GetRoomUsers(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
