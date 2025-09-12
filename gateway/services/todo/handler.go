@@ -13,6 +13,21 @@ type handler struct {
 	next models.TodoService
 }
 
+// GetRoomTodos implements models.TodoHandler.
+func (h *handler) GetRoomTodos(ctx *gin.Context) {
+	id, err := server.GetPathUint64(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{err.Error()},
+		})
+
+		return
+	}
+
+	result := h.next.GetRoomTodos(ctx, id)
+	ctx.JSON(result.Status, result)
+}
+
 // DeleteTodo implements models.TodoHandler.
 func (h *handler) DeleteTodo(ctx *gin.Context) {
 	id, err := server.GetPathUint64(ctx)
@@ -113,6 +128,7 @@ func NewHandler(srv models.TodoService, s *server.Server) models.TodoHandler {
 		group.GET("/", handler.GetAllTodos)
 		group.PATCH("/change_status/:id/:status", handler.ChangeStatus)
 		group.DELETE("/:id", handler.DeleteTodo)
+		group.GET("/room/:id", handler.GetRoomTodos)
 	}
 
 	return handler

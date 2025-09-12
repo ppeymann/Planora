@@ -6,7 +6,10 @@ option go_package = "github.com/ppeymann/Planora.git/proto/room;roompb";
 
 import "google/protobuf/timestamp.proto";
 
-service RoomService { rpc Create(CreateRoomRequest) returns (Room); }
+service RoomService {
+  rpc Create(CreateRoomRequest) returns (Room);
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+}
 
 message BaseModel {
   uint64 id = 1;
@@ -27,3 +30,7 @@ message Room {
   repeated uint64 user_ids = 4;
   repeated uint64 todo_ids = 5;
 }
+
+message GetUsersRequest { uint64 room_id = 1; }
+
+message GetUsersResponse { repeated uint64 user_ids = 1; }

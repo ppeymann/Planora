@@ -25,6 +25,9 @@ type (
 
 		// DeleteTodo service is for delete todo
 		DeleteTodo(ctx *gin.Context, id uint64) *common.BaseResult
+
+		// GetRoomTodos service is for get all todo that is for room with specific ID
+		GetRoomTodos(ctx *gin.Context, roomID uint64) *common.BaseResult
 	}
 
 	// TodoHandler represents method signatures for todo handlers.
@@ -44,6 +47,9 @@ type (
 
 		// DeleteTodo handler for delete a todo
 		DeleteTodo(ctx *gin.Context)
+
+		// GetRoomTodos handler is for get all todo that is for room with specific ID
+		GetRoomTodos(ctx *gin.Context)
 	}
 
 	// TodoInput for create or update todo

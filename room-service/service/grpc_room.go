@@ -30,3 +30,14 @@ func (s *RoomServiceServer) Create(_ context.Context, in *roompb.CreateRoomReque
 		CreatorId: in.CreatorId,
 	}, nil
 }
+
+func (s *RoomServiceServer) GetUsers(_ context.Context, in *roompb.GetUsersRequest) (*roompb.GetUsersResponse, error) {
+	ids, err := s.repo.GetUsers(in.GetRoomId())
+	if err != nil {
+		return nil, err
+	}
+
+	return &roompb.GetUsersResponse{
+		UserIds: ids,
+	}, err
+}

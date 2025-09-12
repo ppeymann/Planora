@@ -12,6 +12,11 @@ type validationService struct {
 	next    models.TodoService
 }
 
+// GetRoomTodos implements models.TodoService.
+func (v *validationService) GetRoomTodos(ctx *gin.Context, roomID uint64) *common.BaseResult {
+	return v.next.GetRoomTodos(ctx, roomID)
+}
+
 // DeleteTodo implements models.TodoService.
 func (v *validationService) DeleteTodo(ctx *gin.Context, id uint64) *common.BaseResult {
 	return v.next.DeleteTodo(ctx, id)

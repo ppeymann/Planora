@@ -24,6 +24,7 @@ const (
 	TodoService_GetAllTodo_FullMethodName   = "/todo.TodoService/GetAllTodo"
 	TodoService_ChangeStatus_FullMethodName = "/todo.TodoService/ChangeStatus"
 	TodoService_DeleteTodo_FullMethodName   = "/todo.TodoService/DeleteTodo"
+	TodoService_GetRoomTodos_FullMethodName = "/todo.TodoService/GetRoomTodos"
 )
 
 // TodoServiceClient is the client API for TodoService service.
@@ -35,6 +36,7 @@ type TodoServiceClient interface {
 	GetAllTodo(ctx context.Context, in *GetAllTodoRequest, opts ...grpc.CallOption) (*GetAllTodoResponse, error)
 	ChangeStatus(ctx context.Context, in *ChangeStatusRequest, opts ...grpc.CallOption) (*Todo, error)
 	DeleteTodo(ctx context.Context, in *DeleteTodoRequest, opts ...grpc.CallOption) (*DeleteTodoResponse, error)
+	GetRoomTodos(ctx context.Context, in *RoomTodosRequest, opts ...grpc.CallOption) (*RoomTodosResponse, error)
 }
 
 type todoServiceClient struct {
@@ -95,6 +97,16 @@ func (c *todoServiceClient) DeleteTodo(ctx context.Context, in *DeleteTodoReques
 	return out, nil
 }
 
+func (c *todoServiceClient) GetRoomTodos(ctx context.Context, in *RoomTodosRequest, opts ...grpc.CallOption) (*RoomTodosResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoomTodosResponse)
+	err := c.cc.Invoke(ctx, TodoService_GetRoomTodos_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TodoServiceServer is the server API for TodoService service.
 // All implementations must embed UnimplementedTodoServiceServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type TodoServiceServer interface {
 	GetAllTodo(context.Context, *GetAllTodoRequest) (*GetAllTodoResponse, error)
 	ChangeStatus(context.Context, *ChangeStatusRequest) (*Todo, error)
 	DeleteTodo(context.Context, *DeleteTodoRequest) (*DeleteTodoResponse, error)
+	GetRoomTodos(context.Context, *RoomTodosRequest) (*RoomTodosResponse, error)
 	mustEmbedUnimplementedTodoServiceServer()
 }
 
@@ -128,6 +141,9 @@ func (UnimplementedTodoServiceServer) ChangeStatus(context.Context, *ChangeStatu
 }
 func (UnimplementedTodoServiceServer) DeleteTodo(context.Context, *DeleteTodoRequest) (*DeleteTodoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTodo not implemented")
+}
+func (UnimplementedTodoServiceServer) GetRoomTodos(context.Context, *RoomTodosRequest) (*RoomTodosResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoomTodos not implemented")
 }
 func (UnimplementedTodoServiceServer) mustEmbedUnimplementedTodoServiceServer() {}
 func (UnimplementedTodoServiceServer) testEmbeddedByValue()                     {}
@@ -240,6 +256,24 @@ func _TodoService_DeleteTodo_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TodoService_GetRoomTodos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoomTodosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TodoServiceServer).GetRoomTodos(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TodoService_GetRoomTodos_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TodoServiceServer).GetRoomTodos(ctx, req.(*RoomTodosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TodoService_ServiceDesc is the grpc.ServiceDesc for TodoService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +300,10 @@ var TodoService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTodo",
 			Handler:    _TodoService_DeleteTodo_Handler,
+		},
+		{
+			MethodName: "GetRoomTodos",
+			Handler:    _TodoService_GetRoomTodos_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -26,3 +26,22 @@ func (s *RoomServiceServer) CreateService(data []byte) (*roompb.Room, error) {
 
 	return room, nil
 }
+
+func (s *RoomServiceServer) GetUsersService(data []byte) (*roompb.GetUsersResponse, error) {
+	req := &roompb.GetUsersRequest{}
+
+	err := json.Unmarshal(data, req)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	ids, err := s.GetUsers(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return ids, nil
+}

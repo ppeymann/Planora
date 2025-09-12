@@ -538,6 +538,94 @@ func (x *DeleteTodoResponse) GetId() uint64 {
 	return 0
 }
 
+type RoomTodosRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RoomId        uint64                 `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RoomTodosRequest) Reset() {
+	*x = RoomTodosRequest{}
+	mi := &file_todo_todo_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RoomTodosRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomTodosRequest) ProtoMessage() {}
+
+func (x *RoomTodosRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_todo_todo_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomTodosRequest.ProtoReflect.Descriptor instead.
+func (*RoomTodosRequest) Descriptor() ([]byte, []int) {
+	return file_todo_todo_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *RoomTodosRequest) GetRoomId() uint64 {
+	if x != nil {
+		return x.RoomId
+	}
+	return 0
+}
+
+type RoomTodosResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Todos         []*Todo                `protobuf:"bytes,1,rep,name=todos,proto3" json:"todos,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RoomTodosResponse) Reset() {
+	*x = RoomTodosResponse{}
+	mi := &file_todo_todo_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RoomTodosResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomTodosResponse) ProtoMessage() {}
+
+func (x *RoomTodosResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_todo_todo_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomTodosResponse.ProtoReflect.Descriptor instead.
+func (*RoomTodosResponse) Descriptor() ([]byte, []int) {
+	return file_todo_todo_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *RoomTodosResponse) GetTodos() []*Todo {
+	if x != nil {
+		return x.Todos
+	}
+	return nil
+}
+
 var File_todo_todo_proto protoreflect.FileDescriptor
 
 const file_todo_todo_proto_rawDesc = "" +
@@ -579,7 +667,12 @@ const file_todo_todo_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\x04R\x06userId\"$\n" +
 	"\x12DeleteTodoResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x04R\x02id2\xa6\x02\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\"+\n" +
+	"\x10RoomTodosRequest\x12\x17\n" +
+	"\aroom_id\x18\x01 \x01(\x04R\x06roomId\"5\n" +
+	"\x11RoomTodosResponse\x12 \n" +
+	"\x05todos\x18\x01 \x03(\v2\n" +
+	".todo.TodoR\x05todos2\xe7\x02\n" +
 	"\vTodoService\x12+\n" +
 	"\aAddTodo\x12\x14.todo.AddTodoRequest\x1a\n" +
 	".todo.Todo\x121\n" +
@@ -591,7 +684,8 @@ const file_todo_todo_proto_rawDesc = "" +
 	"\fChangeStatus\x12\x19.todo.ChangeStatusRequest\x1a\n" +
 	".todo.Todo\x12?\n" +
 	"\n" +
-	"DeleteTodo\x12\x17.todo.DeleteTodoRequest\x1a\x18.todo.DeleteTodoResponseB3Z1github.com/ppeymann/Planora.git/proto/todo;todopbb\x06proto3"
+	"DeleteTodo\x12\x17.todo.DeleteTodoRequest\x1a\x18.todo.DeleteTodoResponse\x12?\n" +
+	"\fGetRoomTodos\x12\x16.todo.RoomTodosRequest\x1a\x17.todo.RoomTodosResponseB3Z1github.com/ppeymann/Planora.git/proto/todo;todopbb\x06proto3"
 
 var (
 	file_todo_todo_proto_rawDescOnce sync.Once
@@ -605,7 +699,7 @@ func file_todo_todo_proto_rawDescGZIP() []byte {
 	return file_todo_todo_proto_rawDescData
 }
 
-var file_todo_todo_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_todo_todo_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_todo_todo_proto_goTypes = []any{
 	(*BaseModel)(nil),             // 0: todo.BaseModel
 	(*Todo)(nil),                  // 1: todo.Todo
@@ -616,30 +710,35 @@ var file_todo_todo_proto_goTypes = []any{
 	(*ChangeStatusRequest)(nil),   // 6: todo.ChangeStatusRequest
 	(*DeleteTodoRequest)(nil),     // 7: todo.DeleteTodoRequest
 	(*DeleteTodoResponse)(nil),    // 8: todo.DeleteTodoResponse
-	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
+	(*RoomTodosRequest)(nil),      // 9: todo.RoomTodosRequest
+	(*RoomTodosResponse)(nil),     // 10: todo.RoomTodosResponse
+	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
 }
 var file_todo_todo_proto_depIdxs = []int32{
-	9,  // 0: todo.BaseModel.created_at:type_name -> google.protobuf.Timestamp
-	9,  // 1: todo.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
-	9,  // 2: todo.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
+	11, // 0: todo.BaseModel.created_at:type_name -> google.protobuf.Timestamp
+	11, // 1: todo.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
+	11, // 2: todo.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
 	0,  // 3: todo.Todo.model:type_name -> todo.BaseModel
 	2,  // 4: todo.UpdateTodoRequest.todo:type_name -> todo.AddTodoRequest
 	1,  // 5: todo.GetAllTodoResponse.todos:type_name -> todo.Todo
-	2,  // 6: todo.TodoService.AddTodo:input_type -> todo.AddTodoRequest
-	3,  // 7: todo.TodoService.UpdateTodo:input_type -> todo.UpdateTodoRequest
-	4,  // 8: todo.TodoService.GetAllTodo:input_type -> todo.GetAllTodoRequest
-	6,  // 9: todo.TodoService.ChangeStatus:input_type -> todo.ChangeStatusRequest
-	7,  // 10: todo.TodoService.DeleteTodo:input_type -> todo.DeleteTodoRequest
-	1,  // 11: todo.TodoService.AddTodo:output_type -> todo.Todo
-	1,  // 12: todo.TodoService.UpdateTodo:output_type -> todo.Todo
-	5,  // 13: todo.TodoService.GetAllTodo:output_type -> todo.GetAllTodoResponse
-	1,  // 14: todo.TodoService.ChangeStatus:output_type -> todo.Todo
-	8,  // 15: todo.TodoService.DeleteTodo:output_type -> todo.DeleteTodoResponse
-	11, // [11:16] is the sub-list for method output_type
-	6,  // [6:11] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	1,  // 6: todo.RoomTodosResponse.todos:type_name -> todo.Todo
+	2,  // 7: todo.TodoService.AddTodo:input_type -> todo.AddTodoRequest
+	3,  // 8: todo.TodoService.UpdateTodo:input_type -> todo.UpdateTodoRequest
+	4,  // 9: todo.TodoService.GetAllTodo:input_type -> todo.GetAllTodoRequest
+	6,  // 10: todo.TodoService.ChangeStatus:input_type -> todo.ChangeStatusRequest
+	7,  // 11: todo.TodoService.DeleteTodo:input_type -> todo.DeleteTodoRequest
+	9,  // 12: todo.TodoService.GetRoomTodos:input_type -> todo.RoomTodosRequest
+	1,  // 13: todo.TodoService.AddTodo:output_type -> todo.Todo
+	1,  // 14: todo.TodoService.UpdateTodo:output_type -> todo.Todo
+	5,  // 15: todo.TodoService.GetAllTodo:output_type -> todo.GetAllTodoResponse
+	1,  // 16: todo.TodoService.ChangeStatus:output_type -> todo.Todo
+	8,  // 17: todo.TodoService.DeleteTodo:output_type -> todo.DeleteTodoResponse
+	10, // 18: todo.TodoService.GetRoomTodos:output_type -> todo.RoomTodosResponse
+	13, // [13:19] is the sub-list for method output_type
+	7,  // [7:13] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_todo_todo_proto_init() }
@@ -653,7 +752,7 @@ func file_todo_todo_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_todo_todo_proto_rawDesc), len(file_todo_todo_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

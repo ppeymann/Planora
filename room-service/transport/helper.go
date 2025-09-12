@@ -14,3 +14,12 @@ func HandleCreate(m *nats.Msg, r *service.RoomServiceServer, nc *nats.Conn) {
 		nc.Publish(m.Reply, replyData)
 	}
 }
+
+func HandleGetUsers(m *nats.Msg, r *service.RoomServiceServer, nc *nats.Conn) {
+	resp, err := r.GetUsersService(m.Data)
+	replyData := common.BuildResponse(resp, err)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, replyData)
+	}
+}

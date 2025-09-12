@@ -15,6 +15,22 @@ type loggerService struct {
 	next   models.TodoService
 }
 
+// GetRoomTodos implements models.TodoService.
+func (l *loggerService) GetRoomTodos(ctx *gin.Context, roomID uint64) (result *common.BaseResult) {
+	defer func(begin time.Time) {
+		_ = l.logger.Log(
+			"method", "GetRoomTodos",
+			"errors", strings.Join(result.Errors, " ,"),
+			"result", result,
+			"room_id", roomID,
+			"client_ip", ctx.ClientIP(),
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+
+	return l.next.GetRoomTodos(ctx, roomID)
+}
+
 // DeleteTodo implements models.TodoService.
 func (l *loggerService) DeleteTodo(ctx *gin.Context, id uint64) (result *common.BaseResult) {
 	defer func(begin time.Time) {

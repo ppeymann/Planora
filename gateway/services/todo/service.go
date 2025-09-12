@@ -2,6 +2,7 @@ package todo
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -10,12 +11,114 @@ import (
 	"github.com/ppeymann/Planora.git/pkg/auth"
 	"github.com/ppeymann/Planora.git/pkg/common"
 	"github.com/ppeymann/Planora.git/pkg/utils"
+	roompb "github.com/ppeymann/Planora.git/proto/room"
 	todopb "github.com/ppeymann/Planora.git/proto/todo"
 	"github.com/ppeymann/Planora/gateway/models"
+	"github.com/thoas/go-funk"
 )
 
 type service struct {
 	nc *nats.Conn
+}
+
+// GetRoomTodos implements models.TodoService.
+func (s *service) GetRoomTodos(ctx *gin.Context, roomID uint64) *common.BaseResult {
+	claims := &auth.Claims{}
+	_ = utils.CatchClaims(ctx, claims)
+
+	roomReq := &roompb.GetUsersRequest{
+		RoomId: roomID,
+	}
+
+	data, err := json.Marshal(roomReq)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	roomMsg, err := s.nc.Request(string(models.GetUsers), data, 2*time.Second)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	roomOutput := &common.BaseResult{}
+
+	err = json.Unmarshal(roomMsg.Data, roomOutput)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	resultMap, ok := roomOutput.Result.(map[string]interface{})
+	if !ok {
+		return &common.BaseResult{
+			Errors: []string{"invalid result format"},
+			Status: http.StatusOK,
+		}
+	}
+
+	userIDsIface, ok := resultMap["user_ids"].([]interface{})
+	if !ok {
+		return &common.BaseResult{
+			Errors: []string{"invalid user_ids format"},
+			Status: http.StatusOK,
+		}
+	}
+
+	var userIDs []uint64
+	for _, v := range userIDsIface {
+		if id, ok := v.(float64); ok { // JSON اعداد رو float64 می‌کنه
+			userIDs = append(userIDs, uint64(id))
+		}
+	}
+
+	fmt.Println(userIDs)
+
+	if !funk.Contains(userIDs, uint64(claims.Subject)) {
+		return &common.BaseResult{
+			Errors: []string{"permission denied"},
+			Status: http.StatusOK,
+		}
+	}
+
+	todoReq := &todopb.RoomTodosRequest{
+		RoomId: roomID,
+	}
+
+	todoData, err := json.Marshal(todoReq)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	todoMsg, err := s.nc.Request(string(models.RoomTodo), todoData, 2*time.Second)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	op := &common.BaseResult{}
+	err = json.Unmarshal(todoMsg.Data, op)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	return op
+
 }
 
 // DeleteTodo implements models.TodoService.

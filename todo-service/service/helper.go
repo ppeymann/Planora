@@ -102,3 +102,22 @@ func (s *TodoServiceServer) DeleteTodoService(data []byte) (*todopb.DeleteTodoRe
 
 	return res, nil
 }
+
+func (s *TodoServiceServer) GetRoomTodosService(data []byte) (*todopb.RoomTodosResponse, error) {
+	req := &todopb.RoomTodosRequest{}
+
+	err := json.Unmarshal(data, req)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	res, err := s.GetRoomTodos(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}

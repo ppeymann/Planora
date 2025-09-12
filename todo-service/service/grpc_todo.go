@@ -67,6 +67,10 @@ func (s *TodoServiceServer) GetAllTodo(ctx context.Context, in *todopb.GetAllTod
 		return nil, err
 	}
 
+	if todos == nil {
+		return nil, errors.New("todo not Found")
+	}
+
 	var todoResponse []*todopb.Todo
 	for _, todo := range todos {
 		t := todopb.Todo{
@@ -114,5 +118,34 @@ func (s *TodoServiceServer) DeleteTodo(ctx context.Context, req *todopb.DeleteTo
 
 	return &todopb.DeleteTodoResponse{
 		Id: req.GetId(),
+	}, nil
+}
+
+func (s *TodoServiceServer) GetRoomTodos(ctx context.Context, req *todopb.RoomTodosRequest) (*todopb.RoomTodosResponse, error) {
+	todos, err := s.repo.GetRoomTodos(uint(req.RoomId))
+	if err != nil {
+		return nil, err
+	}
+
+	if todos == nil {
+		return nil, errors.New("todo not Found")
+	}
+
+	var todosRes []*todopb.Todo
+	for _, todo := range todos {
+		t := &todopb.Todo{
+			Model:       models.ToBaseModel(&todo),
+			Title:       todo.Title,
+			Description: todo.Description,
+			Status:      string(todo.Status),
+			UserId:      uint64(todo.UserID),
+			RoomId:      uint64(todo.RoomID),
+		}
+
+		todosRes = append(todosRes, t)
+	}
+
+	return &todopb.RoomTodosResponse{
+		Todos: todosRes,
 	}, nil
 }

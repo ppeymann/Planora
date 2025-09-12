@@ -15,6 +15,16 @@ type instrumentingService struct {
 	next           models.TodoService
 }
 
+// GetRoomTodos implements models.TodoService.
+func (i *instrumentingService) GetRoomTodos(ctx *gin.Context, roomID uint64) *common.BaseResult {
+	defer func(begin time.Time) {
+		i.requestCount.With("method", "GetRoomTodos").Add(1)
+		i.requestLatency.With("method", "GetRoomTodos").Observe(time.Since(begin).Seconds())
+	}(time.Now())
+
+	return i.next.GetRoomTodos(ctx, roomID)
+}
+
 // DeleteTodo implements models.TodoService.
 func (i *instrumentingService) DeleteTodo(ctx *gin.Context, id uint64) *common.BaseResult {
 	defer func(begin time.Time) {

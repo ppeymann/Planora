@@ -12,6 +12,23 @@ type roomRepo struct {
 	table    string
 }
 
+// GetUsers implements models.RoomRepository.
+func (r *roomRepo) GetUsers(roomID uint64) ([]uint64, error) {
+	room := &models.RoomEntity{}
+
+	err := r.Model().Where("id = ?", uint(roomID)).First(room).Error
+	if err != nil {
+		return nil, err
+	}
+
+	userIDs := make([]uint64, len(room.UserIDs))
+	for i, id := range room.UserIDs {
+		userIDs[i] = uint64(id)
+	}
+
+	return userIDs, nil
+}
+
 // Migrate implements models.RoomRepository.
 func (r *roomRepo) Migrate() error {
 	return r.pg.AutoMigrate(&models.RoomEntity{})

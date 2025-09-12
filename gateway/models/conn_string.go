@@ -18,8 +18,10 @@ const (
 	GetAll       TodoEventName = "todo.GETALL"
 	ChangeStatus TodoEventName = "todo.CHANGE_STATUS"
 	Delete       TodoEventName = "todo.DELETE"
+	RoomTodo     TodoEventName = "todo.ROOM_TODO"
 )
 
 const (
 	CreateRoom RoomEventName = "room.CREATE"
+	GetUsers   RoomEventName = "room.GET_USERS"
 )

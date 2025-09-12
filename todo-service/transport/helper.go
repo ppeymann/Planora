@@ -50,3 +50,12 @@ func HandleDeleteTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) 
 		nc.Publish(m.Reply, reply)
 	}
 }
+
+func HandleGetRoomTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
+	resp, err := t.GetRoomTodosService(m.Data)
+	reply := common.BuildResponse(resp, err)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, reply)
+	}
+}

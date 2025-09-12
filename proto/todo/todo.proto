@@ -12,6 +12,7 @@ service TodoService {
   rpc GetAllTodo(GetAllTodoRequest) returns (GetAllTodoResponse);
   rpc ChangeStatus(ChangeStatusRequest) returns (Todo);
   rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse);
+  rpc GetRoomTodos(RoomTodosRequest) returns (RoomTodosResponse);
 }
 
 message BaseModel {
@@ -58,3 +59,7 @@ message DeleteTodoRequest {
 }
 
 message DeleteTodoResponse { uint64 id = 1; }
+
+message RoomTodosRequest { uint64 room_id = 1; }
+
+message RoomTodosResponse { repeated Todo todos = 1; }

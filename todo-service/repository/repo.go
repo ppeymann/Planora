@@ -14,6 +14,18 @@ type todoRepo struct {
 	table    string
 }
 
+// GetRoomTodos implements models.TodoRepository.
+func (r *todoRepo) GetRoomTodos(roomID uint) ([]models.TodoEntity, error) {
+	var todos []models.TodoEntity
+
+	err := r.Model().Where("room_id = ?", roomID).Find(&todos).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return todos, nil
+}
+
 // DeleteTodo implements models.TodoRepository.
 func (r *todoRepo) DeleteTodo(id uint, userID uint) error {
 	todo, err := r.FindByID(id)
