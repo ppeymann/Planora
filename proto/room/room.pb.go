@@ -360,8 +360,7 @@ func (x *GetRoomRequest) GetCreatorId() uint64 {
 
 type GetRoomResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Model         *BaseModel             `protobuf:"bytes,1,opt,name=model,proto3" json:"model,omitempty"`
-	Room          *Room                  `protobuf:"bytes,2,opt,name=room,proto3" json:"room,omitempty"`
+	Room          *Room                  `protobuf:"bytes,1,opt,name=room,proto3" json:"room,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -394,13 +393,6 @@ func (x *GetRoomResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use GetRoomResponse.ProtoReflect.Descriptor instead.
 func (*GetRoomResponse) Descriptor() ([]byte, []int) {
 	return file_room_room_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *GetRoomResponse) GetModel() *BaseModel {
-	if x != nil {
-		return x.Model
-	}
-	return nil
 }
 
 func (x *GetRoomResponse) GetRoom() *Room {
@@ -441,10 +433,9 @@ const file_room_room_proto_rawDesc = "" +
 	"\x0eGetRoomRequest\x12\x17\n" +
 	"\aroom_id\x18\x01 \x01(\x04R\x06roomId\x12\x1d\n" +
 	"\n" +
-	"creator_id\x18\x02 \x01(\x04R\tcreatorId\"X\n" +
-	"\x0fGetRoomResponse\x12%\n" +
-	"\x05model\x18\x01 \x01(\v2\x0f.room.BaseModelR\x05model\x12\x1e\n" +
-	"\x04room\x18\x02 \x01(\v2\n" +
+	"creator_id\x18\x02 \x01(\x04R\tcreatorId\"1\n" +
+	"\x0fGetRoomResponse\x12\x1e\n" +
+	"\x04room\x18\x01 \x01(\v2\n" +
 	".room.RoomR\x04room2\xaf\x01\n" +
 	"\vRoomService\x12-\n" +
 	"\x06Create\x12\x17.room.CreateRoomRequest\x1a\n" +
@@ -480,19 +471,18 @@ var file_room_room_proto_depIdxs = []int32{
 	7, // 1: room.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
 	7, // 2: room.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
 	0, // 3: room.Room.model:type_name -> room.BaseModel
-	0, // 4: room.GetRoomResponse.model:type_name -> room.BaseModel
-	2, // 5: room.GetRoomResponse.room:type_name -> room.Room
-	1, // 6: room.RoomService.Create:input_type -> room.CreateRoomRequest
-	3, // 7: room.RoomService.GetUsers:input_type -> room.GetUsersRequest
-	5, // 8: room.RoomService.GetRoom:input_type -> room.GetRoomRequest
-	2, // 9: room.RoomService.Create:output_type -> room.Room
-	4, // 10: room.RoomService.GetUsers:output_type -> room.GetUsersResponse
-	6, // 11: room.RoomService.GetRoom:output_type -> room.GetRoomResponse
-	9, // [9:12] is the sub-list for method output_type
-	6, // [6:9] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	2, // 4: room.GetRoomResponse.room:type_name -> room.Room
+	1, // 5: room.RoomService.Create:input_type -> room.CreateRoomRequest
+	3, // 6: room.RoomService.GetUsers:input_type -> room.GetUsersRequest
+	5, // 7: room.RoomService.GetRoom:input_type -> room.GetRoomRequest
+	2, // 8: room.RoomService.Create:output_type -> room.Room
+	4, // 9: room.RoomService.GetUsers:output_type -> room.GetUsersResponse
+	6, // 10: room.RoomService.GetRoom:output_type -> room.GetRoomResponse
+	8, // [8:11] is the sub-list for method output_type
+	5, // [5:8] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_room_room_proto_init() }

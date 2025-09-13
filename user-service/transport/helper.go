@@ -2,10 +2,10 @@ package transport
 
 import (
 	"encoding/json"
-	"net/http"
 
 	"github.com/nats-io/nats.go"
 	"github.com/ppeymann/Planora.git/pkg/common"
+	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"github.com/ppeymann/Planora/user/service"
 )
 
@@ -39,9 +39,8 @@ func HandleAccount(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn) {
 func HandleGetRoomUsers(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn) {
 	resp, err := u.GetRoomUsersService(m.Data)
 	if err != nil {
-		replyData := &common.BaseResult{
-			Errors: []string{err.Error()},
-			Status: http.StatusOK,
+		replyData := &userpb.GetRoomUsersResponse{
+			Users: []*userpb.User{},
 		}
 
 		data, _ := json.Marshal(replyData)

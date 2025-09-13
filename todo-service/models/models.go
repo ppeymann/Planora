@@ -69,6 +69,7 @@ const (
 	SubjectChangeStatus EventType = "todo.CHANGE_STATUS"
 	SubjectDeleteTodo   EventType = "todo.DELETE"
 	SubjectGetRoomTodo  EventType = "todo.ROOM_TODO"
+	SubjectGetTodoGrpc  EventType = "todo.GET_TODO_GRPC"
 )
 
 func ToBaseModel(t *TodoEntity) *todopb.BaseModel {

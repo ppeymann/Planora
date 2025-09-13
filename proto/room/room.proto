@@ -41,7 +41,4 @@ message GetRoomRequest {
   uint64 creator_id = 2;
 }
 
-message GetRoomResponse {
-  BaseModel model = 1;
-  Room room = 2;
-}
+message GetRoomResponse { Room room = 1; }

@@ -4,7 +4,8 @@ import (
 	"github.com/lib/pq"
 	"github.com/ppeymann/Planora.git/pkg/common"
 	roompb "github.com/ppeymann/Planora.git/proto/room"
-	"google.golang.org/protobuf/types/known/timestamppb"
+	todopb "github.com/ppeymann/Planora.git/proto/todo"
+	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"gorm.io/gorm"
 )
 
@@ -18,6 +19,9 @@ type (
 		// GetUsers with specific room ID
 		GetUsers(roomID uint64) ([]uint64, error)
 
+		// GetRoom with room ID
+		GetRoom(roomID uint) (*RoomEntity, error)
+
 		common.BaseRepository
 	}
 
@@ -28,17 +32,18 @@ type (
 		UserIDs   pq.Int64Array `gorm:"column:user_ids;type:bigint[]"`
 		TodosIDs  pq.Int64Array `gorm:"column:todos_ids;type:bigint[]"`
 	}
+
+	RoomResponse struct {
+		Room  *roompb.Room
+		Users []*userpb.User
+		Todos []*todopb.Todo
+	}
 )
 
-func ToBaseModel(t *RoomEntity) *roompb.BaseModel {
-	return &roompb.BaseModel{
-		Id:         uint64(t.ID),
-		CreatedAt:  timestamppb.New(t.CreatedAt),
-		UpdatedeAt: timestamppb.New(t.UpdatedAt),
-	}
-}
-
 const (
-	SubjectCreate   EventType = "room.CREATE"
-	SubjectGetUsers EventType = "room.GET_USERS"
+	SubjectCreate       EventType = "room.CREATE"
+	SubjectGetUsers     EventType = "room.GET_USERS"
+	SubjectGetRoomUsers EventType = "user.ROOM_USERS"
+	SubjectGetTodoGrpc  EventType = "todo.GET_TODO_GRPC"
+	SubjectGetRoom      EventType = "room.GET_ROOM"
 )

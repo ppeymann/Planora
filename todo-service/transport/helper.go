@@ -1,8 +1,11 @@
 package transport
 
 import (
+	"encoding/json"
+
 	"github.com/nats-io/nats.go"
 	"github.com/ppeymann/Planora.git/pkg/common"
+	todopb "github.com/ppeymann/Planora.git/proto/todo"
 	"github.com/ppeymann/Planora/todo/service"
 )
 
@@ -58,4 +61,26 @@ func HandleGetRoomTodo(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn)
 	if m.Reply != "" {
 		nc.Publish(m.Reply, reply)
 	}
+}
+
+func HandleGetTodosGrpc(m *nats.Msg, t *service.TodoServiceServer, nc *nats.Conn) {
+	resp, err := t.GetRoomTodosService(m.Data)
+	if err != nil {
+		replyData := &todopb.RoomTodosResponse{
+			Todos: []*todopb.Todo{},
+		}
+
+		data, _ := json.Marshal(replyData)
+
+		if m.Reply != "" {
+			nc.Publish(m.Reply, data)
+		}
+	}
+
+	data, _ := json.Marshal(resp)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, data)
+	}
+
 }

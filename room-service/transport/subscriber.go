@@ -10,6 +10,7 @@ func RegisterRoomSubscriber(nc *nats.Conn, roomService *service.RoomServiceServe
 	handler := map[models.EventType]func(*nats.Msg){
 		models.SubjectCreate:   func(m *nats.Msg) { HandleCreate(m, roomService, nc) },
 		models.SubjectGetUsers: func(m *nats.Msg) { HandleGetUsers(m, roomService, nc) },
+		models.SubjectGetRoom:  func(m *nats.Msg) { HandleGetRoom(m, roomService, nc) },
 	}
 
 	nc.Subscribe("room.*", func(m *nats.Msg) {

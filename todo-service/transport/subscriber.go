@@ -15,6 +15,7 @@ func RegisterTodoSubscriber(nc *nats.Conn, todoService *service.TodoServiceServe
 		models.SubjectChangeStatus: func(m *nats.Msg) { HandleChangeStatus(m, todoService, nc) },
 		models.SubjectDeleteTodo:   func(m *nats.Msg) { HandleDeleteTodo(m, todoService, nc) },
 		models.SubjectGetRoomTodo:  func(m *nats.Msg) { HandleGetRoomTodo(m, todoService, nc) },
+		models.SubjectGetTodoGrpc:  func(m *nats.Msg) { HandleGetTodosGrpc(m, todoService, nc) },
 	}
 
 	nc.Subscribe("todo.*", func(m *nats.Msg) {

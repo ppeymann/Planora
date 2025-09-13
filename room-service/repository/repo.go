@@ -12,6 +12,17 @@ type roomRepo struct {
 	table    string
 }
 
+// GetRoom implements models.RoomRepository.
+func (r *roomRepo) GetRoom(roomID uint) (*models.RoomEntity, error) {
+	room := &models.RoomEntity{}
+
+	if err := r.Model().Where("id = ?", roomID).First(room).Error; err != nil {
+		return nil, err
+	}
+
+	return room, nil
+}
+
 // GetUsers implements models.RoomRepository.
 func (r *roomRepo) GetUsers(roomID uint64) ([]uint64, error) {
 	room := &models.RoomEntity{}
