@@ -24,4 +24,5 @@ const (
 const (
 	CreateRoom RoomEventName = "room.CREATE"
 	GetUsers   RoomEventName = "room.GET_USERS"
+	GetRoom    RoomEventName = "room.GET_ROOM"
 )

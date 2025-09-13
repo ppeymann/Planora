@@ -53,6 +53,7 @@ func NewHandler(srv models.RoomService, s *server.Server) models.RoomHandler {
 	group.Use(s.Authenticate())
 	{
 		group.POST("/", handler.Create)
+		group.GET("/:id", handler.GetRoom)
 	}
 
 	return handler
