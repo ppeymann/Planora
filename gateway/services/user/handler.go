@@ -21,7 +21,7 @@ type handler struct {
 // @Tags				user
 // @Accept				json
 // @Produce				json
-// @Success				200		{object}	common.BaseResult	"always return status 200 but body contains errors"
+// @Success				200		{object}	models.BaseResult	"always return status 200 but body contains errors"
 // @Router				/	[get]
 // @Security			bearer authorization
 func (h *handler) Account(ctx *gin.Context) {
@@ -38,7 +38,7 @@ func (h *handler) Account(ctx *gin.Context) {
 // @Accept				json
 // @Produce				json
 // @Param				input	body	models.LoginInput		 true	"login input"
-// @Success				200		{object}	common.BaseResult	"always return status 200 but body contains errors"
+// @Success				200		{object}	models.BaseResult	"always return status 200 but body contains errors"
 // @Router				/login	[post]
 func (h *handler) Login(ctx *gin.Context) {
 	in := &models.LoginInput{}
@@ -64,7 +64,7 @@ func (h *handler) Login(ctx *gin.Context) {
 // @Accept				json
 // @Produce				json
 // @Param				input	body	models.SignUpInput 	true	"sign up input"
-// @Success				200		{object}	common.BaseResult	"always return status 200 but body contains errors"
+// @Success				200		{object}	models.BaseResult	"always return status 200 but body contains errors"
 // @Router				/signup	[post]
 func (h *handler) SignUp(ctx *gin.Context) {
 	in := &models.SignUpInput{}

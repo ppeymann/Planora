@@ -58,7 +58,12 @@ func (s *service) Account(ctx *gin.Context) *common.BaseResult {
 
 // Login implements models.UserService.
 func (s *service) Login(ctx *gin.Context, in *models.LoginInput) *common.BaseResult {
-	data, err := json.Marshal(in)
+	req := &userpb.LoginRequest{
+		Username: in.Username,
+		Password: in.Password,
+	}
+
+	data, err := json.Marshal(req)
 	if err != nil {
 		return &common.BaseResult{
 			Errors: []string{err.Error()},
@@ -89,7 +94,15 @@ func (s *service) Login(ctx *gin.Context, in *models.LoginInput) *common.BaseRes
 
 // SignUp implements models.UserService.
 func (s *service) SignUp(ctx *gin.Context, in *models.SignUpInput) *common.BaseResult {
-	data, err := json.Marshal(in)
+	req := &userpb.SignUpRequest{
+		Username:  in.Username,
+		Password:  in.Password,
+		Email:     in.Email,
+		FirstName: in.FirstName,
+		LastName:  in.LastName,
+	}
+
+	data, err := json.Marshal(req)
 	if err != nil {
 		return &common.BaseResult{
 			Errors: []string{err.Error()},
