@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-kit/log"
 	"github.com/ppeymann/Planora.git/pkg/common"
-	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"github.com/ppeymann/Planora/gateway/models"
 )
 
@@ -32,7 +31,7 @@ func (l *loggerService) Account(ctx *gin.Context) (result *common.BaseResult) {
 }
 
 // Login implements models.UserService.
-func (l *loggerService) Login(ctx *gin.Context, in *userpb.LoginRequest) (result *common.BaseResult) {
+func (l *loggerService) Login(ctx *gin.Context, in *models.LoginInput) (result *common.BaseResult) {
 	defer func(begin time.Time) {
 		_ = l.logger.Log(
 			"method", "Login",
@@ -48,7 +47,7 @@ func (l *loggerService) Login(ctx *gin.Context, in *userpb.LoginRequest) (result
 }
 
 // SignUp implements models.UserService.
-func (l *loggerService) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) (result *common.BaseResult) {
+func (l *loggerService) SignUp(ctx *gin.Context, in *models.SignUpInput) (result *common.BaseResult) {
 	defer func(begin time.Time) {
 		_ = l.logger.Log(
 			"method", "SignUp",

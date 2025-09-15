@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "SignUpRequest",
+    "$id": "SignUpInput",
     "$protected": false,
     "type":"object",
     "properties": {
@@ -8,16 +8,20 @@
             "type":"string"
         },
         "password": {
-            "type":"string"
+            "type":"string",
+            "minLength": 8
         },
         "email":{
-            "type":"string"
+            "type":"string",
+            "pattern": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
         },
         "first_name":{
-            "type":"string"
+            "type":"string",
+            "maxLength": 50
         },
         "last_name":{
-            "type":"string"
+            "type":"string",
+            "maxLength": 50
         }
     },
     "required": [

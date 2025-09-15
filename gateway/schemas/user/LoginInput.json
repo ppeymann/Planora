@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "LoginRequest",
+    "$id": "LoginInput",
     "$protected": false,
     "type":"object",
     "properties": {
@@ -8,7 +8,8 @@
             "type":"string"
         },
         "password": {
-            "type":"string"
+            "type":"string",
+            "minLength": 8
         }
     },
     "required": [

@@ -7,7 +7,6 @@ import (
 	"github.com/ppeymann/Planora.git/pkg/auth"
 	"github.com/ppeymann/Planora.git/pkg/common"
 	"github.com/ppeymann/Planora.git/pkg/utils"
-	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"github.com/ppeymann/Planora/gateway/models"
 )
 
@@ -30,12 +29,12 @@ func (a *authService) Account(ctx *gin.Context) *common.BaseResult {
 }
 
 // Login implements models.UserService.
-func (a *authService) Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult {
+func (a *authService) Login(ctx *gin.Context, in *models.LoginInput) *common.BaseResult {
 	return a.next.Login(ctx, in)
 }
 
 // SignUp implements models.UserService.
-func (a *authService) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) *common.BaseResult {
+func (a *authService) SignUp(ctx *gin.Context, in *models.SignUpInput) *common.BaseResult {
 	return a.next.SignUp(ctx, in)
 }
 

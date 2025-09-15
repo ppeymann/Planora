@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-kit/kit/metrics"
 	"github.com/ppeymann/Planora.git/pkg/common"
-	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"github.com/ppeymann/Planora/gateway/models"
 )
 
@@ -27,7 +26,7 @@ func (i *instrumentingService) Account(ctx *gin.Context) *common.BaseResult {
 }
 
 // Login implements models.UserService.
-func (i *instrumentingService) Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult {
+func (i *instrumentingService) Login(ctx *gin.Context, in *models.LoginInput) *common.BaseResult {
 	defer func(begin time.Time) {
 		i.requestCount.With("method", "Login").Add(1)
 		i.requestLatency.With("method", "Login").Observe(time.Since(begin).Seconds())
@@ -37,7 +36,7 @@ func (i *instrumentingService) Login(ctx *gin.Context, in *userpb.LoginRequest) 
 }
 
 // SignUp implements models.UserService.
-func (i *instrumentingService) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) *common.BaseResult {
+func (i *instrumentingService) SignUp(ctx *gin.Context, in *models.SignUpInput) *common.BaseResult {
 	defer func(begin time.Time) {
 		i.requestCount.With("method", "SignUp").Add(1)
 		i.requestLatency.With("method", "SignUp").Observe(time.Since(begin).Seconds())

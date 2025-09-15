@@ -5,7 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/ppeymann/Planora.git/pkg/common"
-	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"github.com/ppeymann/Planora/gateway/models"
 	"github.com/ppeymann/Planora/gateway/server"
 )
@@ -38,11 +37,11 @@ func (h *handler) Account(ctx *gin.Context) {
 // @Tags				user
 // @Accept				json
 // @Produce				json
-// @Param				input	body	userpb.LoginRequest		 true	"login input"
+// @Param				input	body	models.LoginInput		 true	"login input"
 // @Success				200		{object}	common.BaseResult	"always return status 200 but body contains errors"
 // @Router				/login	[post]
 func (h *handler) Login(ctx *gin.Context) {
-	in := &userpb.LoginRequest{}
+	in := &models.LoginInput{}
 
 	if err := ctx.ShouldBindJSON(in); err != nil {
 		ctx.JSON(http.StatusBadRequest, &common.BaseResult{
@@ -64,11 +63,11 @@ func (h *handler) Login(ctx *gin.Context) {
 // @Tags				user
 // @Accept				json
 // @Produce				json
-// @Param				input	body	userpb.SignUpRequest 	true	"sign up input"
+// @Param				input	body	models.SignUpInput 	true	"sign up input"
 // @Success				200		{object}	common.BaseResult	"always return status 200 but body contains errors"
 // @Router				/signup	[post]
 func (h *handler) SignUp(ctx *gin.Context) {
-	in := &userpb.SignUpRequest{}
+	in := &models.SignUpInput{}
 
 	if err := ctx.ShouldBindJSON(in); err != nil {
 		ctx.JSON(http.StatusBadRequest, common.BaseResult{

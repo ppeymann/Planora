@@ -3,7 +3,6 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/ppeymann/Planora.git/pkg/common"
-	userpb "github.com/ppeymann/Planora.git/proto/user"
 	"github.com/ppeymann/Planora/gateway/models"
 	validations "github.com/ppeymann/Planora/gateway/validation"
 )
@@ -19,7 +18,7 @@ func (v *validationService) Account(ctx *gin.Context) *common.BaseResult {
 }
 
 // Login implements models.UserService.
-func (v *validationService) Login(ctx *gin.Context, in *userpb.LoginRequest) *common.BaseResult {
+func (v *validationService) Login(ctx *gin.Context, in *models.LoginInput) *common.BaseResult {
 	err := validations.Validate(in, v.schema)
 	if err != nil {
 		return err
@@ -29,7 +28,7 @@ func (v *validationService) Login(ctx *gin.Context, in *userpb.LoginRequest) *co
 }
 
 // SignUp implements models.UserService.
-func (v *validationService) SignUp(ctx *gin.Context, in *userpb.SignUpRequest) *common.BaseResult {
+func (v *validationService) SignUp(ctx *gin.Context, in *models.SignUpInput) *common.BaseResult {
 	err := validations.Validate(in, v.schema)
 	if err != nil {
 		return err
