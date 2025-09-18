@@ -15,6 +15,22 @@ type loggerService struct {
 	next   models.RoomService
 }
 
+// AddUser implements models.RoomService.
+func (l *loggerService) AddUser(ctx *gin.Context, in *models.AddUserInput) (result *common.BaseResult) {
+	defer func(begin time.Time) {
+		_ = l.logger.Log(
+			"method", "AddUser",
+			"errors", strings.Join(result.Errors, " ,"),
+			"result", result,
+			"room_id", in.RoomID,
+			"client_ip", ctx.ClientIP(),
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+
+	return l.next.AddUser(ctx, in)
+}
+
 // GetRoom implements models.RoomService.
 func (l *loggerService) GetRoom(ctx *gin.Context, roomID uint64) (result *common.BaseResult) {
 	defer func(begin time.Time) {

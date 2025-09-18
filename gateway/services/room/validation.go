@@ -12,6 +12,16 @@ type validationService struct {
 	next    models.RoomService
 }
 
+// AddUser implements models.RoomService.
+func (v *validationService) AddUser(ctx *gin.Context, in *models.AddUserInput) *common.BaseResult {
+	err := validations.Validate(in, v.schemas)
+	if err != nil {
+		return err
+	}
+
+	return v.next.AddUser(ctx, in)
+}
+
 // GetRoom implements models.RoomService.
 func (v *validationService) GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult {
 	return v.next.GetRoom(ctx, roomID)

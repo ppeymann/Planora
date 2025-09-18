@@ -18,6 +18,42 @@ type service struct {
 	nc *nats.Conn
 }
 
+// AddUser implements models.RoomService.
+func (s *service) AddUser(ctx *gin.Context, in *models.AddUserInput) *common.BaseResult {
+	req := &roompb.AddUserRequest{
+		Username:  in.Username,
+		CreatorId: in.CreatorID,
+		RoomId:    in.RoomID,
+	}
+
+	data, err := json.Marshal(req)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	msg, err := s.nc.Request(string(models.AddUser), data, 2*time.Second)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	op := &common.BaseResult{}
+	err = json.Unmarshal(msg.Data, op)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{err.Error()},
+			Status: http.StatusOK,
+		}
+	}
+
+	return op
+}
+
 // GetRoom implements models.RoomService.
 func (s *service) GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult {
 	claims := &auth.Claims{}

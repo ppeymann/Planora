@@ -14,6 +14,21 @@ type authService struct {
 	next models.RoomService
 }
 
+// AddUser implements models.RoomService.
+func (a *authService) AddUser(ctx *gin.Context, in *models.AddUserInput) *common.BaseResult {
+	claims := &auth.Claims{}
+	err := utils.CatchClaims(ctx, claims)
+	if err != nil {
+		return &common.BaseResult{
+			Errors: []string{common.ErrUnAuthorization.Error()},
+			Status: http.StatusUnauthorized,
+		}
+	}
+
+	in.CreatorID = uint64(claims.Subject)
+	return a.next.AddUser(ctx, in)
+}
+
 // GetRoom implements models.RoomService.
 func (a *authService) GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult {
 	claims := &auth.Claims{}

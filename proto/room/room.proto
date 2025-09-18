@@ -10,6 +10,7 @@ service RoomService {
   rpc Create(CreateRoomRequest) returns (Room);
   rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
   rpc GetRoom(GetRoomRequest) returns (GetRoomResponse);
+  rpc AddUser(AddUserRequest) returns (Room);
 }
 
 message BaseModel {
@@ -42,3 +43,9 @@ message GetRoomRequest {
 }
 
 message GetRoomResponse { Room room = 1; }
+
+message AddUserRequest {
+  string username = 1;
+  uint64 creator_id = 2;
+  uint64 room_id = 3;
+}

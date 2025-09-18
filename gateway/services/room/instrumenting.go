@@ -15,6 +15,16 @@ type instrumentingService struct {
 	next           models.RoomService
 }
 
+// AddUser implements models.RoomService.
+func (i *instrumentingService) AddUser(ctx *gin.Context, in *models.AddUserInput) *common.BaseResult {
+	defer func(begin time.Time) {
+		i.requestCount.With("method", "AddUser").Add(1)
+		i.requestLatency.With("method", "AddUser").Observe(time.Since(begin).Seconds())
+	}(time.Now())
+
+	return i.next.AddUser(ctx, in)
+}
+
 // GetRoom implements models.RoomService.
 func (i *instrumentingService) GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult {
 	defer func(begin time.Time) {

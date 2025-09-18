@@ -13,6 +13,32 @@ type handler struct {
 	next models.RoomService
 }
 
+// AddUser implements models.RoomHandler.
+func (h *handler) AddUser(ctx *gin.Context) {
+	id, err := server.GetPathUint64(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{err.Error()},
+		})
+
+		return
+	}
+
+	in := &models.AddUserInput{}
+	if err := ctx.ShouldBindJSON(in); err != nil {
+		ctx.JSON(http.StatusBadRequest, common.BaseResult{
+			Errors: []string{models.ErrProvideRequiredJsonBody.Error()},
+		})
+
+		return
+	}
+
+	in.RoomID = id
+
+	result := h.next.AddUser(ctx, in)
+	ctx.JSON(result.Status, result)
+}
+
 // GetRoom implements models.RoomHandler.
 func (h *handler) GetRoom(ctx *gin.Context) {
 	id, err := server.GetPathUint64(ctx)

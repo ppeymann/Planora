@@ -14,6 +14,9 @@ type (
 
 		// GetRoom with users and todos and creator information
 		GetRoom(ctx *gin.Context, roomID uint64) *common.BaseResult
+
+		// AddUser is service for add new user to room
+		AddUser(ctx *gin.Context, in *AddUserInput) *common.BaseResult
 	}
 
 	// RoomHandler represents method signatures for room handlers.
@@ -24,10 +27,19 @@ type (
 
 		// GetRoom with all information
 		GetRoom(ctx *gin.Context)
+
+		// AddUser is handler for add new user to room
+		AddUser(ctx *gin.Context)
 	}
 
 	RoomInput struct {
 		Name      string `json:"name"`
 		CreatorID uint64 `json:"creator_id"`
+	}
+
+	AddUserInput struct {
+		Username  string `json:"username"`
+		CreatorID uint64 `json:"creator_id"`
+		RoomID    uint64 `json:"room_id"`
 	}
 )
