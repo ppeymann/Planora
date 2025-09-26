@@ -22,6 +22,9 @@ type (
 		// GetRoom with room ID
 		GetRoom(roomID uint) (*RoomEntity, error)
 
+		// Update room
+		Update(room *RoomEntity) error
+
 		common.BaseRepository
 	}
 
@@ -41,9 +44,11 @@ type (
 )
 
 const (
-	SubjectCreate       EventType = "room.CREATE"
-	SubjectGetUsers     EventType = "room.GET_USERS"
-	SubjectGetRoomUsers EventType = "user.ROOM_USERS"
-	SubjectGetTodoGrpc  EventType = "todo.GET_TODO_GRPC"
-	SubjectGetRoom      EventType = "room.GET_ROOM"
+	SubjectCreate            EventType = "room.CREATE"
+	SubjectGetUsers          EventType = "room.GET_USERS"
+	SubjectGetRoomUsers      EventType = "user.ROOM_USERS"
+	SubjectGetTodoGrpc       EventType = "todo.GET_TODO_GRPC"
+	SubjectGetRoom           EventType = "room.GET_ROOM"
+	SubjectGetUserByUsername EventType = "user.GET_BY_USERNAME"
+	SubjectAddUser           EventType = "room.ADD_USER"
 )

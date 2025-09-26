@@ -104,3 +104,18 @@ func (s *UserServiceServer) GetRoomUsers(ctx context.Context, in *userpb.GetRoom
 		Users: usersResponse,
 	}, nil
 }
+
+func (s *UserServiceServer) GetByUsername(_ context.Context, in *userpb.GetByUsernameRequest) (*userpb.User, error) {
+	user, err := s.repo.Find(in.GetUsername())
+	if err != nil {
+		return nil, err
+	}
+
+	return &userpb.User{
+		Model:     models.ToBaseModel(*user),
+		Username:  user.Username,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}, nil
+}

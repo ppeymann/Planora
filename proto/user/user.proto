@@ -11,6 +11,7 @@ service UserService {
   rpc Login(LoginRequest) returns (User);
   rpc Account(AccountRequest) returns (User);
   rpc GetRoomUsers(GetRoomUsersRequest) returns (GetRoomUsersResponse);
+  rpc GetByUsername(GetByUsernameRequest) returns (User);
 }
 
 message BaseModel {
@@ -47,3 +48,5 @@ message AccountRequest { uint64 id = 1; }
 message GetRoomUsersRequest { repeated uint64 ids = 1; }
 
 message GetRoomUsersResponse { repeated User users = 1; }
+
+message GetByUsernameRequest { string username = 1; }

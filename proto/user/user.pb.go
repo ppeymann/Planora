@@ -434,6 +434,50 @@ func (x *GetRoomUsersResponse) GetUsers() []*User {
 	return nil
 }
 
+type GetByUsernameRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetByUsernameRequest) Reset() {
+	*x = GetByUsernameRequest{}
+	mi := &file_user_user_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetByUsernameRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetByUsernameRequest) ProtoMessage() {}
+
+func (x *GetByUsernameRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetByUsernameRequest.ProtoReflect.Descriptor instead.
+func (*GetByUsernameRequest) Descriptor() ([]byte, []int) {
+	return file_user_user_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetByUsernameRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
 var File_user_user_proto protoreflect.FileDescriptor
 
 const file_user_user_proto_rawDesc = "" +
@@ -471,7 +515,9 @@ const file_user_user_proto_rawDesc = "" +
 	"\x03ids\x18\x01 \x03(\x04R\x03ids\"8\n" +
 	"\x14GetRoomUsersResponse\x12 \n" +
 	"\x05users\x18\x01 \x03(\v2\n" +
-	".user.UserR\x05users2\xd5\x01\n" +
+	".user.UserR\x05users\"2\n" +
+	"\x14GetByUsernameRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername2\x8e\x02\n" +
 	"\vUserService\x12)\n" +
 	"\x06SignUp\x12\x13.user.SignUpRequest\x1a\n" +
 	".user.User\x12'\n" +
@@ -479,7 +525,9 @@ const file_user_user_proto_rawDesc = "" +
 	".user.User\x12+\n" +
 	"\aAccount\x12\x14.user.AccountRequest\x1a\n" +
 	".user.User\x12E\n" +
-	"\fGetRoomUsers\x12\x19.user.GetRoomUsersRequest\x1a\x1a.user.GetRoomUsersResponseB3Z1github.com/ppeymann/Planora.git/proto/user;userpbb\x06proto3"
+	"\fGetRoomUsers\x12\x19.user.GetRoomUsersRequest\x1a\x1a.user.GetRoomUsersResponse\x127\n" +
+	"\rGetByUsername\x12\x1a.user.GetByUsernameRequest\x1a\n" +
+	".user.UserB3Z1github.com/ppeymann/Planora.git/proto/user;userpbb\x06proto3"
 
 var (
 	file_user_user_proto_rawDescOnce sync.Once
@@ -493,7 +541,7 @@ func file_user_user_proto_rawDescGZIP() []byte {
 	return file_user_user_proto_rawDescData
 }
 
-var file_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_user_user_proto_goTypes = []any{
 	(*BaseModel)(nil),             // 0: user.BaseModel
 	(*SignUpRequest)(nil),         // 1: user.SignUpRequest
@@ -502,27 +550,30 @@ var file_user_user_proto_goTypes = []any{
 	(*AccountRequest)(nil),        // 4: user.AccountRequest
 	(*GetRoomUsersRequest)(nil),   // 5: user.GetRoomUsersRequest
 	(*GetRoomUsersResponse)(nil),  // 6: user.GetRoomUsersResponse
-	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
+	(*GetByUsernameRequest)(nil),  // 7: user.GetByUsernameRequest
+	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
 }
 var file_user_user_proto_depIdxs = []int32{
-	7, // 0: user.BaseModel.created_at:type_name -> google.protobuf.Timestamp
-	7, // 1: user.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
-	7, // 2: user.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
-	0, // 3: user.User.model:type_name -> user.BaseModel
-	2, // 4: user.GetRoomUsersResponse.users:type_name -> user.User
-	1, // 5: user.UserService.SignUp:input_type -> user.SignUpRequest
-	3, // 6: user.UserService.Login:input_type -> user.LoginRequest
-	4, // 7: user.UserService.Account:input_type -> user.AccountRequest
-	5, // 8: user.UserService.GetRoomUsers:input_type -> user.GetRoomUsersRequest
-	2, // 9: user.UserService.SignUp:output_type -> user.User
-	2, // 10: user.UserService.Login:output_type -> user.User
-	2, // 11: user.UserService.Account:output_type -> user.User
-	6, // 12: user.UserService.GetRoomUsers:output_type -> user.GetRoomUsersResponse
-	9, // [9:13] is the sub-list for method output_type
-	5, // [5:9] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	8,  // 0: user.BaseModel.created_at:type_name -> google.protobuf.Timestamp
+	8,  // 1: user.BaseModel.updatede_at:type_name -> google.protobuf.Timestamp
+	8,  // 2: user.BaseModel.deleted_at:type_name -> google.protobuf.Timestamp
+	0,  // 3: user.User.model:type_name -> user.BaseModel
+	2,  // 4: user.GetRoomUsersResponse.users:type_name -> user.User
+	1,  // 5: user.UserService.SignUp:input_type -> user.SignUpRequest
+	3,  // 6: user.UserService.Login:input_type -> user.LoginRequest
+	4,  // 7: user.UserService.Account:input_type -> user.AccountRequest
+	5,  // 8: user.UserService.GetRoomUsers:input_type -> user.GetRoomUsersRequest
+	7,  // 9: user.UserService.GetByUsername:input_type -> user.GetByUsernameRequest
+	2,  // 10: user.UserService.SignUp:output_type -> user.User
+	2,  // 11: user.UserService.Login:output_type -> user.User
+	2,  // 12: user.UserService.Account:output_type -> user.User
+	6,  // 13: user.UserService.GetRoomUsers:output_type -> user.GetRoomUsersResponse
+	2,  // 14: user.UserService.GetByUsername:output_type -> user.User
+	10, // [10:15] is the sub-list for method output_type
+	5,  // [5:10] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_user_user_proto_init() }
@@ -536,7 +587,7 @@ func file_user_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_user_proto_rawDesc), len(file_user_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

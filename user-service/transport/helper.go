@@ -56,3 +56,22 @@ func HandleGetRoomUsers(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn
 		nc.Publish(m.Reply, data)
 	}
 }
+
+func HandleGetByUsername(m *nats.Msg, u *service.UserServiceServer, nc *nats.Conn) {
+	user, err := u.GetByUsernameService(m.Data)
+	if err != nil {
+		replyData := &userpb.User{}
+
+		data, _ := json.Marshal(replyData)
+
+		if m.Reply != "" {
+			nc.Publish(m.Reply, data)
+		}
+	}
+
+	data, _ := json.Marshal(user)
+
+	if m.Reply != "" {
+		nc.Publish(m.Reply, data)
+	}
+}

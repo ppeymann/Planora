@@ -15,15 +15,6 @@ type handler struct {
 
 // AddUser implements models.RoomHandler.
 func (h *handler) AddUser(ctx *gin.Context) {
-	id, err := server.GetPathUint64(ctx)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, common.BaseResult{
-			Errors: []string{err.Error()},
-		})
-
-		return
-	}
-
 	in := &models.AddUserInput{}
 	if err := ctx.ShouldBindJSON(in); err != nil {
 		ctx.JSON(http.StatusBadRequest, common.BaseResult{
@@ -32,8 +23,6 @@ func (h *handler) AddUser(ctx *gin.Context) {
 
 		return
 	}
-
-	in.RoomID = id
 
 	result := h.next.AddUser(ctx, in)
 	ctx.JSON(result.Status, result)
@@ -80,6 +69,7 @@ func NewHandler(srv models.RoomService, s *server.Server) models.RoomHandler {
 	{
 		group.POST("/", handler.Create)
 		group.GET("/:id", handler.GetRoom)
+		group.POST("/add_user", handler.AddUser)
 	}
 
 	return handler

@@ -72,10 +72,11 @@ type (
 )
 
 const (
-	Signup       EventType = "user.SIGNUP"
-	Login        EventType = "user.LOGIN"
-	Account      EventType = "user.ACCOUNT"
-	GetRoomUsers EventType = "user.ROOM_USERS"
+	Signup        EventType = "user.SIGNUP"
+	Login         EventType = "user.LOGIN"
+	Account       EventType = "user.ACCOUNT"
+	GetRoomUsers  EventType = "user.ROOM_USERS"
+	GetByUsername EventType = "user.GET_BY_USERNAME"
 )
 
 func ToBaseModel(u UserEntity) *userpb.BaseModel {

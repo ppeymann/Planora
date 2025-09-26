@@ -407,6 +407,7 @@ type AddUserRequest struct {
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	CreatorId     uint64                 `protobuf:"varint,2,opt,name=creator_id,json=creatorId,proto3" json:"creator_id,omitempty"`
 	RoomId        uint64                 `protobuf:"varint,3,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	UserId        uint64                 `protobuf:"varint,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -462,6 +463,13 @@ func (x *AddUserRequest) GetRoomId() uint64 {
 	return 0
 }
 
+func (x *AddUserRequest) GetUserId() uint64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
 var File_room_room_proto protoreflect.FileDescriptor
 
 const file_room_room_proto_rawDesc = "" +
@@ -496,12 +504,13 @@ const file_room_room_proto_rawDesc = "" +
 	"creator_id\x18\x02 \x01(\x04R\tcreatorId\"1\n" +
 	"\x0fGetRoomResponse\x12\x1e\n" +
 	"\x04room\x18\x01 \x01(\v2\n" +
-	".room.RoomR\x04room\"d\n" +
+	".room.RoomR\x04room\"}\n" +
 	"\x0eAddUserRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1d\n" +
 	"\n" +
 	"creator_id\x18\x02 \x01(\x04R\tcreatorId\x12\x17\n" +
-	"\aroom_id\x18\x03 \x01(\x04R\x06roomId2\xdc\x01\n" +
+	"\aroom_id\x18\x03 \x01(\x04R\x06roomId\x12\x17\n" +
+	"\auser_id\x18\x04 \x01(\x04R\x06userId2\xdc\x01\n" +
 	"\vRoomService\x12-\n" +
 	"\x06Create\x12\x17.room.CreateRoomRequest\x1a\n" +
 	".room.Room\x129\n" +

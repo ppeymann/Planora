@@ -12,6 +12,11 @@ type roomRepo struct {
 	table    string
 }
 
+// Update implements models.RoomRepository.
+func (r *roomRepo) Update(room *models.RoomEntity) error {
+	return r.pg.Save(room).Error
+}
+
 // GetRoom implements models.RoomRepository.
 func (r *roomRepo) GetRoom(roomID uint) (*models.RoomEntity, error) {
 	room := &models.RoomEntity{}

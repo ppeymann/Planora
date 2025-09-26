@@ -48,4 +48,5 @@ message AddUserRequest {
   string username = 1;
   uint64 creator_id = 2;
   uint64 room_id = 3;
+  uint64 user_id = 4;
 }

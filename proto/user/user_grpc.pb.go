@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserService_SignUp_FullMethodName       = "/user.UserService/SignUp"
-	UserService_Login_FullMethodName        = "/user.UserService/Login"
-	UserService_Account_FullMethodName      = "/user.UserService/Account"
-	UserService_GetRoomUsers_FullMethodName = "/user.UserService/GetRoomUsers"
+	UserService_SignUp_FullMethodName        = "/user.UserService/SignUp"
+	UserService_Login_FullMethodName         = "/user.UserService/Login"
+	UserService_Account_FullMethodName       = "/user.UserService/Account"
+	UserService_GetRoomUsers_FullMethodName  = "/user.UserService/GetRoomUsers"
+	UserService_GetByUsername_FullMethodName = "/user.UserService/GetByUsername"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -33,6 +34,7 @@ type UserServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*User, error)
 	Account(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*User, error)
 	GetRoomUsers(ctx context.Context, in *GetRoomUsersRequest, opts ...grpc.CallOption) (*GetRoomUsersResponse, error)
+	GetByUsername(ctx context.Context, in *GetByUsernameRequest, opts ...grpc.CallOption) (*User, error)
 }
 
 type userServiceClient struct {
@@ -83,6 +85,16 @@ func (c *userServiceClient) GetRoomUsers(ctx context.Context, in *GetRoomUsersRe
 	return out, nil
 }
 
+func (c *userServiceClient) GetByUsername(ctx context.Context, in *GetByUsernameRequest, opts ...grpc.CallOption) (*User, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(User)
+	err := c.cc.Invoke(ctx, UserService_GetByUsername_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type UserServiceServer interface {
 	Login(context.Context, *LoginRequest) (*User, error)
 	Account(context.Context, *AccountRequest) (*User, error)
 	GetRoomUsers(context.Context, *GetRoomUsersRequest) (*GetRoomUsersResponse, error)
+	GetByUsername(context.Context, *GetByUsernameRequest) (*User, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedUserServiceServer) Account(context.Context, *AccountRequest) 
 }
 func (UnimplementedUserServiceServer) GetRoomUsers(context.Context, *GetRoomUsersRequest) (*GetRoomUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRoomUsers not implemented")
+}
+func (UnimplementedUserServiceServer) GetByUsername(context.Context, *GetByUsernameRequest) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetByUsername not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -206,6 +222,24 @@ func _UserService_GetRoomUsers_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_GetByUsername_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByUsernameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetByUsername(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetByUsername_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetByUsername(ctx, req.(*GetByUsernameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRoomUsers",
 			Handler:    _UserService_GetRoomUsers_Handler,
+		},
+		{
+			MethodName: "GetByUsername",
+			Handler:    _UserService_GetByUsername_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

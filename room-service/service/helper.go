@@ -64,3 +64,15 @@ func (s *RoomServiceServer) GetRoomService(data []byte) (*roompb.GetRoomResponse
 
 	return room, nil
 }
+
+func (s *RoomServiceServer) AddUserService(in *roompb.AddUserRequest) (*roompb.Room, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	room, err := s.AddUser(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+
+	return room, nil
+}
